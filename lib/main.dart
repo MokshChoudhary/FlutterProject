@@ -3,12 +3,9 @@ import 'splashScreen.dart';
 
 void main() {
   runApp(
-    MaterialApp(
+    const MaterialApp(
       debugShowCheckedModeBanner: true,
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text("First Application"),
-        ),
         body: SplashScreen(),
       ),
     ),

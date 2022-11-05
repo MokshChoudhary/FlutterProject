@@ -1,10 +1,21 @@
 // ignore_for_file: file_names
 
-import 'package:flutter/material.dart';
+import 'dart:async';
 
-class SplashScreen extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:my_app/constant/colors.dart';
+
+import 'homeScreen.dart';
+
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
+  @override
+  // ignore: library_private_types_in_public_api
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
   List<Widget> getCenterText() {
     return [
       Center(
@@ -13,7 +24,7 @@ class SplashScreen extends StatelessWidget {
           child: const Text(
             "Student",
             style: TextStyle(
-              color: Colors.white,
+              color: AppColor.secondaryTextColor,
               fontSize: 48,
             ),
           ),
@@ -23,7 +34,7 @@ class SplashScreen extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(8.0),
           decoration: const BoxDecoration(
-            color: Color.fromARGB(255, 211, 152, 2),
+            color: AppColor.primaryColor,
             borderRadius: BorderRadius.all(
               Radius.circular(12.0),
             ),
@@ -31,13 +42,22 @@ class SplashScreen extends StatelessWidget {
           child: const Text(
             "Hub",
             style: TextStyle(
-              color: Colors.black,
+              color: AppColor.textColor,
               fontSize: 48,
             ),
           ),
         ),
       ),
     ];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Timer(
+        const Duration(seconds: 3),
+        () => Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (BuildContext context) => const HomeScreen())));
   }
 
   @override
