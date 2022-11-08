@@ -14,70 +14,81 @@ class CardViewSubjectDisplay extends StatefulWidget {
 }
 
 class _CardViewSubjectDisplay extends State<CardViewSubjectDisplay> {
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Wrap(
-        children: <Widget>[
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text("Subject Name"),
+
+
+  Widget progressBar() {
+    return Stack(
+      children: <Widget>[
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              child: const LinearProgressIndicator(
+                semanticsLabel: "Marks",
+                minHeight: 30,
+                color: AppColor.primaryColor,
+                backgroundColor: AppColor.textColor,
+                value: 0.75,
+              ),
             ),
           ),
-          Stack(
-            children: <Widget>[
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    child: const LinearProgressIndicator(
-                      semanticsLabel: "Marks",
-                      minHeight: 18,
-                      color: AppColor.primaryColor,
-                      backgroundColor: AppColor.textColor,
-                      value: 0.75,
-                    ),
-                  ),
-                ),
+        ),
+        const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "75",
+              style: TextStyle(color: AppColor.secondaryTextColor),
+            ),
+          ),
+        ),
+        const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Align(
+            alignment: Alignment.center,
+            child: Text(
+              "75%",
+              style: TextStyle(color: AppColor.secondaryTextColor),
+            ),
+          ),
+        ),
+        const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              "100",
+              style: TextStyle(color: AppColor.secondaryTextColor),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      child: Card(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children:  <Widget>[
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text("Subject Name"),
               ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "75",
-                    style: TextStyle(color: AppColor.secondaryTextColor),
-                  ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "75%",
-                    style: TextStyle(color: AppColor.secondaryTextColor),
-                  ),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    "100",
-                    style: TextStyle(color: AppColor.secondaryTextColor),
-                  ),
-                ),
-              ),
-            ],
-          )
-        ],
+            ),
+            Column( children : <Widget>[const Center(child: Text("Marks"),),progressBar(),],),
+            Column( children : <Widget>[const Center(child: Text("Attendance"),),progressBar(),],),
+          ],
+        ),
       ),
     );
   }

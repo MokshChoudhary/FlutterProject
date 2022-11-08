@@ -23,11 +23,10 @@ class _HomeViewState extends State<HomeView> {
           ),
         ),
         Flexible(
-          child: GridView.count(
-            crossAxisCount: 2,
-            childAspectRatio: 3,
+          child: ListView(
+            shrinkWrap: true,
             children: <Widget>[
-              for (int i = 0; i < 10; i++) CardViewSubjectDisplay()
+              for (int i = 0; i < 8; i++) CardViewSubjectDisplay()
             ],
           ),
         )

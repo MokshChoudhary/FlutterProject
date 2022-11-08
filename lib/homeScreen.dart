@@ -69,6 +69,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: true,
+      theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+      darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: AppColor.primaryColor,
@@ -140,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: Center(
           child: Container(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(18),
             child: const Center(
               child: HomeView(),
             ),
