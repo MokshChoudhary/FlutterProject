@@ -50,18 +50,25 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget drawerList(String data) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: GestureDetector(
-        onTap: () => onTapNavMenu(),
-        child: Text(
-          data,
-          style: const TextStyle(
-            fontSize: 18.0,
-            color: AppColor.secondaryTextColor,
+    return  Column(
+        children :<Widget>[
+          GestureDetector(
+            onTap: () => onTapNavMenu(),
+            child: Align(
+              alignment: Alignment.centerLeft,
+             child:Text(
+               data,
+               style: const TextStyle(
+                 fontSize: 18.0,
+               ),
+             ),
+            ),
           ),
+      const Divider(
+        thickness: 2,
+        color: Colors.black,
         ),
-      ),
+        ],
     );
   }
 
@@ -80,7 +87,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         drawer: Drawer(
-          backgroundColor: AppColor.secondaryColor,
           child: Column(
             children: <Widget>[
               Expanded(
@@ -130,13 +136,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     alignment: Alignment.centerLeft,
                     child: Column(
                       children: <Widget>[
-                        drawerList("saklndl"),
-                        drawerList("ckajsnckja"),
+                        drawerList("Home"),
+                        drawerList("Profile"),
                       ],
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

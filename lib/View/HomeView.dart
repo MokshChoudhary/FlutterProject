@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/widget/CardViewSubjectDisplay.dart';
 
+import 'SubjectView.dart';
+
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
@@ -19,14 +21,22 @@ class _HomeViewState extends State<HomeView> {
         const Text(
           "Home",
           style: TextStyle(
-            fontSize: 28,
+            fontSize: 24,
           ),
+        ),
+        const Divider(
+          thickness: 1,
+          color: Colors.black,
         ),
         Flexible(
           child: ListView(
             shrinkWrap: true,
             children: <Widget>[
-              for (int i = 0; i < 8; i++) CardViewSubjectDisplay()
+              for (int i = 0; i < 5; i++)
+                GestureDetector(
+                  //onTap: () => {Navigator.push(context, const SubjectInfo())},
+                  child: CardViewSubjectDisplay(),
+                ),
             ],
           ),
         )
