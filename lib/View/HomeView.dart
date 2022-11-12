@@ -1,9 +1,9 @@
 // ignore_for_file: file_names
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:my_app/widget/CardViewSubjectDisplay.dart';
-
-import 'SubjectView.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -34,7 +34,10 @@ class _HomeViewState extends State<HomeView> {
             children: <Widget>[
               for (int i = 0; i < 5; i++)
                 GestureDetector(
-                  //onTap: () => {Navigator.push(context, const SubjectInfo())},
+                  onTap: () => {
+                    debugPrint("OnTap subjectInfo"),
+                    Navigator.pushNamed(context, "/subjectInfo")
+                    },
                   child: CardViewSubjectDisplay(),
                 ),
             ],
