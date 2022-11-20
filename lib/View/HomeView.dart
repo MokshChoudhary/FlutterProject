@@ -3,6 +3,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:my_app/View/SubjectView.dart';
 import 'package:my_app/widget/CardViewSubjectDisplay.dart';
 
 class HomeView extends StatefulWidget {
@@ -36,8 +37,9 @@ class _HomeViewState extends State<HomeView> {
                 GestureDetector(
                   onTap: () => {
                     debugPrint("OnTap subjectInfo"),
-                    Navigator.pushNamed(context, "/subjectInfo")
-                    },
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (_) => const SubjectInfo()))
+                  },
                   child: CardViewSubjectDisplay(),
                 ),
             ],

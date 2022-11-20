@@ -1,22 +1,19 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:my_app/widget/Dilog.dart';
 import '../constant/colors.dart';
 
-class AppDrawer extends StatefulWidget{
+class AppDrawer extends StatefulWidget {
   const AppDrawer({super.key});
 
   @override
-  _AppDrawer createState() => _AppDrawer();
-
+  State<StatefulWidget> createState() => MainAppDrawer();
 }
 
-class _AppDrawer extends State<StatefulWidget>{
-
+class MainAppDrawer extends State<StatefulWidget> {
   void onTapNavMenu() {
-    //TODO: close the Drawer after clicking the menu
     AppDialog().show(context);
   }
-
 
   Widget drawerList(String data) {
     return Column(
@@ -67,8 +64,8 @@ class _AppDrawer extends State<StatefulWidget>{
                         width: 100,
                         height: 100,
                         child: const Image(
-                          image: AssetImage(
-                              'images/user/icons8-contacts-512.png'),
+                          image:
+                              AssetImage('images/user/icons8-contacts-512.png'),
                         ),
                       ),
                     ),
@@ -104,5 +101,4 @@ class _AppDrawer extends State<StatefulWidget>{
       ),
     );
   }
-
 }

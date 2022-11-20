@@ -16,8 +16,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -37,8 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         drawer: const AppDrawer(),
         body: const Padding(
-            padding: EdgeInsets.all(18),
-              child: HomeView(),
+          padding: EdgeInsets.all(18),
+          child: HomeView(),
         ),
       ),
     );
