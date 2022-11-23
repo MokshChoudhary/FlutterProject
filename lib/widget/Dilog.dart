@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../constant/colors.dart';
@@ -13,13 +12,15 @@ class AppDialog {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: AppColor.primaryColor,
-          icon:  const Text(AppString.appName),
+          icon: const Text(AppString.appName),
           title: const Text('AlertDialog Title'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 const Text('This is a demo alert dialog.'),
-                msg == "" ? const Text('Would you like to approve of this message?') : Text(msg),
+                msg == ""
+                    ? const Text('Would you like to approve of this message?')
+                    : Text(msg),
               ],
             ),
           ),
@@ -35,5 +36,4 @@ class AppDialog {
       },
     );
   }
-
 }

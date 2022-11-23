@@ -28,10 +28,39 @@ class _SubjectInfoState extends State<SubjectInfo> {
           ),
           backgroundColor: AppColor.primaryColor,
           title: const Center(
-            child: Text("Subject name"),
+            child: Text("Subject Name"),
           ),
         ),
-        body: const Text("test"),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+            child: GridView.count(
+              crossAxisCount: 2,
+              children: const <Widget>[
+                Card(
+                  child: Center(
+                    child: Text("Name"),
+                  ),
+                ),
+                Card(
+                  child: Center(
+                    child: Text("Attends"),
+                  ),
+                ),
+                Card(
+                  child: Center(
+                    child: Text("Test 1 Marks"),
+                  ),
+                ),
+                Card(
+                  child: Center(
+                    child: Text("Test2 Marks"),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
