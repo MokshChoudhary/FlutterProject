@@ -1,9 +1,10 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, library_private_types_in_public_api
 
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:my_app/constant/colors.dart';
+import 'package:my_app/database/HubDBHelper.dart';
 
 import 'homeScreen.dart';
 
@@ -11,12 +12,13 @@ class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
   List<Widget> getCenterText() {
+    HubDBHelper().initDb();
+
     return [
       Center(
         child: Container(

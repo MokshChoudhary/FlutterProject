@@ -1,7 +1,4 @@
 // ignore_for_file: file_names
-
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:my_app/View/SubjectView.dart';
 import 'package:my_app/widget/CardViewSubjectDisplay.dart';

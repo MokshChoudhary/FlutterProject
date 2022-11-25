@@ -1,9 +1,5 @@
 // ignore_for_file: file_names
-
-import 'dart:ffi';
-
 import 'package:floor/floor.dart';
-import 'package:my_app/View/SubjectView.dart';
 
 import 'Class.dart';
 
@@ -18,14 +14,12 @@ class Student {
   @ForeignKey(
       childColumns: ["classId"], parentColumns: ["classId"], entity: Class)
   final String classId;
-  final DateTime dob;
+  final int dob;
   final int aadharNumber;
-  final List<String> teacherId;
-  final List<SubjectInfo> subjects;
   final String address;
-  final Float marksObtain;
+  final double marksObtain;
   final int attendsObtain;
-  final DateTime joinIn;
+  final int joinIn;
   final String fatherFirstName;
   final String fatherLastName;
   final String motherFirstName;
@@ -34,10 +28,8 @@ class Student {
 
   Student(
       this.studentFirstName,
-      this.subjects,
       this.studentLastName,
       this.dob,
-      this.teacherId,
       this.subjectId,
       this.cgpa,
       this.aadharNumber,
