@@ -4,10 +4,10 @@ import 'package:my_app/database/Teacher.dart';
 
 @dao
 abstract class TeacherDao {
-  @Query('Select * form Student')
+  @Query('Select * from Student')
   Future<List<Teacher>> findAllTeacher();
 
-  @Query("Select * form Student Where studentId = :id")
+  @Query("Select * from Student Where studentId = :id")
   Future<Teacher?> findTeacherById(String id);
 
   @insert

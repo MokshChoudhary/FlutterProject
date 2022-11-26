@@ -4,7 +4,7 @@ import 'package:my_app/database/Login.dart';
 
 @dao
 abstract class LoginDao {
-  @Query('Select * form Student')
+  @Query('Select * from Student')
   Future<List<Login>> findAllUser();
 
   @insert

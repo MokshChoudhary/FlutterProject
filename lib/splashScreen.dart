@@ -5,22 +5,19 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:my_app/LoginScreen.dart';
 import 'package:my_app/constant/colors.dart';
-import 'package:my_app/database/HubDBHelper.dart';
 import 'package:my_app/database/HubDatabase.dart';
 
 import 'homeScreen.dart';
 
 class SplashScreen extends StatefulWidget {
-  final HubDatabase database;
-  const SplashScreen({super.key, required this.database});
+  const SplashScreen({super.key});
 
   @override
-  _SplashScreenState createState() => _SplashScreenState(database: database);
+  _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final HubDatabase database;
-  _SplashScreenState({required this.database});
+  _SplashScreenState();
   List<Widget> getCenterText() {
     return [
       Center(
@@ -56,9 +53,9 @@ class _SplashScreenState extends State<SplashScreen> {
     ];
   }
 
-  @override
-  Future<void> initState() async {
-    super.initState();
+  void loginCheck() async {
+    final HubDatabase database =
+        await $FloorHubDatabase.databaseBuilder('studentHub.db').build();
     database.loginDao.findAllUser().then((value) => {
           if (value.isNotEmpty)
             {
@@ -95,6 +92,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    loginCheck();
     return Container(
       color: Colors.black,
       child: Center(
