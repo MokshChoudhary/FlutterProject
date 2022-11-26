@@ -3,22 +3,25 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:my_app/LoginScreen.dart';
 import 'package:my_app/constant/colors.dart';
 import 'package:my_app/database/HubDBHelper.dart';
+import 'package:my_app/database/HubDatabase.dart';
 
 import 'homeScreen.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  final HubDatabase database;
+  const SplashScreen({super.key, required this.database});
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  _SplashScreenState createState() => _SplashScreenState(database: database);
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final HubDatabase database;
+  _SplashScreenState({required this.database});
   List<Widget> getCenterText() {
-    HubDBHelper().initDb();
-
     return [
       Center(
         child: Container(
@@ -54,12 +57,40 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   @override
-  void initState() {
+  Future<void> initState() async {
     super.initState();
-    Timer(
-        const Duration(seconds: 3),
-        () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (BuildContext context) => const HomeScreen())));
+    database.loginDao.findAllUser().then((value) => {
+          if (value.isNotEmpty)
+            {
+              if (value.length > 0)
+                Timer(
+                  const Duration(seconds: 3),
+                  () => Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => const HomeScreen(),
+                    ),
+                  ),
+                )
+              else
+                Timer(
+                  const Duration(seconds: 3),
+                  () => Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => const LoginScreen(),
+                    ),
+                  ),
+                )
+            }
+          else
+            Timer(
+              const Duration(seconds: 3),
+              () => Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (BuildContext context) => const LoginScreen(),
+                ),
+              ),
+            )
+        });
   }
 
   @override

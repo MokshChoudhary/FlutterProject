@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/database/HubDatabase.dart';
 import 'splashScreen.dart';
 
-void main() {
+Future<void> main() async {
+  final HubDatabase database =
+      await $FloorHubDatabase.databaseBuilder('app_database.db').build();
   runApp(
-    const MaterialApp(
+    MaterialApp(
       debugShowCheckedModeBanner: true,
       home: Scaffold(
-        body: SplashScreen(),
+        body: SplashScreen(
+          database: database,
+        ),
       ),
     ),
   );

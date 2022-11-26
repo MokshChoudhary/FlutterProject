@@ -2,6 +2,8 @@
 
 import 'dart:async';
 import 'package:floor/floor.dart';
+import 'package:my_app/database/Dao/LoginDao.dart';
+import 'package:my_app/database/Login.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 import 'package:my_app/database/Dao/StudentDao.dart';
@@ -11,8 +13,9 @@ import 'package:my_app/database/Teacher.dart';
 
 part 'HubDatabase.g.dart';
 
-@Database(version: 1, entities: [Teacher, Student])
+@Database(version: 1, entities: [Login, Teacher, Student])
 abstract class HubDatabase extends FloorDatabase {
   StudentDao get studentDao;
   TeacherDao get teacherDao;
+  LoginDao get loginDao;
 }

@@ -53,6 +53,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   floor_generator: ^1.3.0
   build_runner: ^2.1.2
+  test:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
