@@ -155,7 +155,7 @@ class _$StudentDao extends StudentDao {
 
   @override
   Future<List<Student>> findAllStudent() async {
-    return _queryAdapter.queryList('Select * form Student',
+    return _queryAdapter.queryList('Select * from Student',
         mapper: (Map<String, Object?> row) => Student(
             row['studentFirstName'] as String,
             row['studentLastName'] as String,
@@ -178,7 +178,7 @@ class _$StudentDao extends StudentDao {
 
   @override
   Future<Student?> findStudentById(String id) async {
-    return _queryAdapter.query('Select * form Student Where studentId = ?1',
+    return _queryAdapter.query('Select * from Student Where studentId = ?1',
         mapper: (Map<String, Object?> row) => Student(
             row['studentFirstName'] as String,
             row['studentLastName'] as String,
@@ -233,7 +233,7 @@ class _$TeacherDao extends TeacherDao {
 
   @override
   Future<List<Teacher>> findAllTeacher() async {
-    return _queryAdapter.queryList('Select * form Student',
+    return _queryAdapter.queryList('Select * from Student',
         mapper: (Map<String, Object?> row) => Teacher(
             row['teacherName'] as String,
             row['dob'] as int,
@@ -245,7 +245,7 @@ class _$TeacherDao extends TeacherDao {
 
   @override
   Future<Teacher?> findTeacherById(String id) async {
-    return _queryAdapter.query('Select * form Student Where studentId = ?1',
+    return _queryAdapter.query('Select * from Student Where studentId = ?1',
         mapper: (Map<String, Object?> row) => Teacher(
             row['teacherName'] as String,
             row['dob'] as int,
@@ -287,11 +287,25 @@ class _$LoginDao extends LoginDao {
 
   @override
   Future<List<Login>> findAllUser() async {
-    return _queryAdapter.queryList('Select * form Student',
+    return _queryAdapter.queryList('Select * from Student;',
         mapper: (Map<String, Object?> row) => Login(
             loginBy: row['loginBy'] as int,
             userId: row['userId'] as String,
             password: row['password'] as String));
+  }
+
+  @override
+  Future<List<Login>> findUser(
+    String userId,
+    String password,
+  ) async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM Student WHERE userId = ?1 AND password = ?2;',
+        mapper: (Map<String, Object?> row) => Login(
+            loginBy: row['loginBy'] as int,
+            userId: row['userId'] as String,
+            password: row['password'] as String),
+        arguments: [userId, password]);
   }
 
   @override
