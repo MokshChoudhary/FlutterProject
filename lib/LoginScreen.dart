@@ -1,5 +1,7 @@
 // ignore_for_file: file_names
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:my_app/constant/colors.dart';
 import 'package:my_app/registerView/registerScreen.dart';
@@ -111,6 +113,7 @@ class LoginScreen extends StatelessWidget {
                           child: Center(
                             child: OutlinedButton(
                               onPressed: () {
+                                log("Loging button press ${userIDController.text} , ${passController.text}");
                                 if (userIDController.text.isNotEmpty ||
                                     passController.text.isNotEmpty) {
                                   getdatabase().then((value) => {
@@ -147,11 +150,17 @@ class LoginScreen extends StatelessWidget {
                           child: Center(
                             child: OutlinedButton(
                               onPressed: () {
+                                log("Register button press ${userIDController.text} , ${passController.text}");
                                 if (userIDController.text.isNotEmpty &&
                                     passController.text.isNotEmpty) {
                                   userIDController.text == "admin" &&
                                           passController.text == "p@ssw0rd"
-                                      ? RegisterScreen()
+                                      ? Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                RegisterScreen(),
+                                          ),
+                                        )
                                       : showSnackBar(
                                           "Wrong UserID or Password!!");
                                 }

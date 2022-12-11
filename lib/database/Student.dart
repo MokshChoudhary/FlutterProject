@@ -9,7 +9,8 @@ class Student {
   final String studentId;
   final String studentFirstName;
   final String studentLastName;
-  final String subjectId;
+  //Gender are Male, Female and other (0,1,2)
+  final int gender;
   final int cgpa;
   @ForeignKey(
       childColumns: ["classId"], parentColumns: ["classId"], entity: Class)
@@ -30,7 +31,6 @@ class Student {
       this.studentFirstName,
       this.studentLastName,
       this.dob,
-      this.subjectId,
       this.cgpa,
       this.aadharNumber,
       this.address,
@@ -43,5 +43,6 @@ class Student {
       this.motherLastName,
       this.gardiuanNumber,
       this.classId,
+      this.gender,
       {required this.studentId});
 }

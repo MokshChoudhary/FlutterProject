@@ -93,7 +93,7 @@ class _$HubDatabase extends HubDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `Teacher` (`teacherId` TEXT NOT NULL, `teacherName` TEXT NOT NULL, `dob` INTEGER NOT NULL, `address` TEXT NOT NULL, `exprience` TEXT NOT NULL, `dateOfJoing` TEXT NOT NULL, PRIMARY KEY (`teacherId`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Student` (`studentId` TEXT NOT NULL, `studentFirstName` TEXT NOT NULL, `studentLastName` TEXT NOT NULL, `subjectId` TEXT NOT NULL, `cgpa` INTEGER NOT NULL, `classId` TEXT NOT NULL, `dob` INTEGER NOT NULL, `aadharNumber` INTEGER NOT NULL, `address` TEXT NOT NULL, `marksObtain` REAL NOT NULL, `attendsObtain` INTEGER NOT NULL, `joinIn` INTEGER NOT NULL, `fatherFirstName` TEXT NOT NULL, `fatherLastName` TEXT NOT NULL, `motherFirstName` TEXT NOT NULL, `motherLastName` TEXT NOT NULL, `gardiuanNumber` INTEGER NOT NULL, PRIMARY KEY (`studentId`))');
+            'CREATE TABLE IF NOT EXISTS `Student` (`studentId` TEXT NOT NULL, `studentFirstName` TEXT NOT NULL, `studentLastName` TEXT NOT NULL, `gender` INTEGER NOT NULL, `cgpa` INTEGER NOT NULL, `classId` TEXT NOT NULL, `dob` INTEGER NOT NULL, `aadharNumber` INTEGER NOT NULL, `address` TEXT NOT NULL, `marksObtain` REAL NOT NULL, `attendsObtain` INTEGER NOT NULL, `joinIn` INTEGER NOT NULL, `fatherFirstName` TEXT NOT NULL, `fatherLastName` TEXT NOT NULL, `motherFirstName` TEXT NOT NULL, `motherLastName` TEXT NOT NULL, `gardiuanNumber` INTEGER NOT NULL, PRIMARY KEY (`studentId`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -129,7 +129,7 @@ class _$StudentDao extends StudentDao {
                   'studentId': item.studentId,
                   'studentFirstName': item.studentFirstName,
                   'studentLastName': item.studentLastName,
-                  'subjectId': item.subjectId,
+                  'gender': item.gender,
                   'cgpa': item.cgpa,
                   'classId': item.classId,
                   'dob': item.dob,
@@ -160,7 +160,6 @@ class _$StudentDao extends StudentDao {
             row['studentFirstName'] as String,
             row['studentLastName'] as String,
             row['dob'] as int,
-            row['subjectId'] as String,
             row['cgpa'] as int,
             row['aadharNumber'] as int,
             row['address'] as String,
@@ -173,6 +172,7 @@ class _$StudentDao extends StudentDao {
             row['motherLastName'] as String,
             row['gardiuanNumber'] as int,
             row['classId'] as String,
+            row['gender'] as int,
             studentId: row['studentId'] as String));
   }
 
@@ -183,7 +183,6 @@ class _$StudentDao extends StudentDao {
             row['studentFirstName'] as String,
             row['studentLastName'] as String,
             row['dob'] as int,
-            row['subjectId'] as String,
             row['cgpa'] as int,
             row['aadharNumber'] as int,
             row['address'] as String,
@@ -196,6 +195,7 @@ class _$StudentDao extends StudentDao {
             row['motherLastName'] as String,
             row['gardiuanNumber'] as int,
             row['classId'] as String,
+            row['gender'] as int,
             studentId: row['studentId'] as String),
         arguments: [id]);
   }
@@ -286,7 +286,7 @@ class _$LoginDao extends LoginDao {
   final InsertionAdapter<Login> _loginInsertionAdapter;
 
   @override
-  Future<List<Login>> findAllUser() async {
+  Future<List<Login?>> findAllUser() async {
     return _queryAdapter.queryList('Select * from Student;',
         mapper: (Map<String, Object?> row) => Login(
             loginBy: row['loginBy'] as int,
@@ -295,7 +295,7 @@ class _$LoginDao extends LoginDao {
   }
 
   @override
-  Future<List<Login>> findUser(
+  Future<List<Login?>> findUser(
     String userId,
     String password,
   ) async {
