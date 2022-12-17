@@ -1,7 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, file_names
 
 import 'package:flutter/material.dart';
-import 'package:my_app/constant/colors.dart';
+import 'package:studenthub/constant/colors.dart';
 import 'dart:math';
 
 // ignore: must_be_immutable

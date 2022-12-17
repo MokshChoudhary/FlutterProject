@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 import 'package:floor/floor.dart';
-import 'package:my_app/database/Login.dart';
+import 'package:studenthub/database/Login.dart';
 
 @dao
 abstract class LoginDao {

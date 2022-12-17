@@ -2,14 +2,14 @@
 
 import 'dart:async';
 import 'package:floor/floor.dart';
-import 'package:my_app/database/Dao/LoginDao.dart';
-import 'package:my_app/database/Login.dart';
+import 'package:studenthub/database/Dao/LoginDao.dart';
+import 'package:studenthub/database/Login.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
-import 'package:my_app/database/Dao/StudentDao.dart';
-import 'package:my_app/database/Dao/TeacherDao.dart';
-import 'package:my_app/database/Student.dart';
-import 'package:my_app/database/Teacher.dart';
+import 'package:studenthub/database/Dao/StudentDao.dart';
+import 'package:studenthub/database/Dao/TeacherDao.dart';
+import 'package:studenthub/database/Student.dart';
+import 'package:studenthub/database/Teacher.dart';
 
 part 'HubDatabase.g.dart';
 

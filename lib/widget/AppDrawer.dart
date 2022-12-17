@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
-import 'package:my_app/widget/Dilog.dart';
+import 'package:studenthub/widget/Dilog.dart';
 import '../constant/colors.dart';
 
 class AppDrawer extends StatefulWidget {

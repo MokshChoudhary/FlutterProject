@@ -1,11 +1,11 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:my_app/View/HomeView.dart';
-import 'package:my_app/View/SubjectView.dart';
-import 'package:my_app/constant/colors.dart';
-import 'package:my_app/constant/strings.dart';
-import 'package:my_app/widget/AppDrawer.dart';
+import 'package:studenthub/View/HomeView.dart';
+import 'package:studenthub/View/SubjectView.dart';
+import 'package:studenthub/constant/colors.dart';
+import 'package:studenthub/constant/strings.dart';
+import 'package:studenthub/widget/AppDrawer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

@@ -3,8 +3,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:my_app/constant/colors.dart';
-import 'package:my_app/registerView/registerScreen.dart';
+import 'package:studenthub/constant/colors.dart';
+import 'package:studenthub/registerView/registerScreen.dart';
 
 import 'database/HubDatabase.dart';
 

@@ -1,9 +1,9 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:my_app/widget/AppDrawer.dart';
 
 import '../constant/colors.dart';
+import '../widget/AppDrawer.dart';
 
 class SubjectInfo extends StatefulWidget {
   const SubjectInfo({super.key});

@@ -3,9 +3,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:my_app/LoginScreen.dart';
-import 'package:my_app/constant/colors.dart';
-import 'package:my_app/database/HubDatabase.dart';
+import 'package:studenthub/LoginScreen.dart';
+import 'package:studenthub/constant/colors.dart';
+import 'package:studenthub/database/HubDatabase.dart';
 
 import 'homeScreen.dart';
 

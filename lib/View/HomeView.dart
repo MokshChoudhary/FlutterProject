@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
-import 'package:my_app/View/SubjectView.dart';
-import 'package:my_app/widget/CardViewSubjectDisplay.dart';
+import 'package:studenthub/View/SubjectView.dart';
+import 'package:studenthub/widget/CardViewSubjectDisplay.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
