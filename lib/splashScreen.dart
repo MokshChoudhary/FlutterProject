@@ -59,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen> {
     database.loginDao.findAllUser().then((value) => {
           if (value.isNotEmpty)
             {
-              if (value.length > 0)
+              if (value.isNotEmpty)
                 Timer(
                   const Duration(seconds: 3),
                   () => Navigator.of(context).pushReplacement(

@@ -1,4 +1,6 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, library_private_types_in_public_api
+
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
@@ -26,7 +28,10 @@ class _RegisterScreen extends State<StatefulWidget> {
 
     String studentFnameValue = "";
     String studentLnameValue = "";
-    String dobValue = "";
+    String dobValue = DateTime.now().toString();
+    String gender = "";
+    String sub_cast = "";
+    String relegin = "";
     String aadharNumberValue = "";
     String addressValue = "";
     String joinDateValue = "";
@@ -90,16 +95,20 @@ class _RegisterScreen extends State<StatefulWidget> {
                     ),
                   ),
                   onTap: () {
-                    final Future<DateTime?> picker = showDatePicker(
+                    showDatePicker(
                       context: context,
                       firstDate: DateTime.utc(DateTime.now().year - 60),
                       lastDate: DateTime.now(),
                       initialDate: DateTime.now(),
-                    );
-                    setState(() {
-                      picker.then((value) => {
-                            dobValue = value.toString(),
-                          });
+                    ).then((value) {
+                      setState(() {
+                        try {
+                          dobValue = value!.toString();
+                        } catch (e) {
+                          log(e.toString());
+                        }
+                      });
+                      log("Value : $dobValue");
                     });
                   },
                 ),

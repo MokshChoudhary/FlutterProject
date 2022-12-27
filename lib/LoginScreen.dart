@@ -8,10 +8,16 @@ import 'package:studenthub/registerView/registerScreen.dart';
 
 import 'database/HubDatabase.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
+  @override
+  _LoginScreen createState() => _LoginScreen();
+}
+
+class _LoginScreen extends State<StatefulWidget> {
   final scaffoldCurrent = GlobalKey<ScaffoldMessengerState>();
+  bool _passwordVisibity = false;
 
   Future<HubDatabase> getdatabase() async {
     final HubDatabase database =
@@ -29,6 +35,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final userIDController = TextEditingController();
     final passController = TextEditingController();
+
     return MaterialApp(
       scaffoldMessengerKey: scaffoldCurrent,
       theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
@@ -98,10 +105,18 @@ class LoginScreen extends StatelessWidget {
                     ),
                     TextField(
                       autocorrect: false,
-                      obscureText: true,
+                      obscureText: _passwordVisibity,
                       controller: passController,
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(),
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                            onPressed: () {
+                              _passwordVisibity = !_passwordVisibity;
+                              setState(() {});
+                            },
+                            icon: Icon(_passwordVisibity
+                                ? Icons.visibility
+                                : Icons.visibility_off)),
+                        border: const UnderlineInputBorder(),
                         labelText: 'Enter your password',
                       ),
                     ),

@@ -93,7 +93,7 @@ class _$HubDatabase extends HubDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `Teacher` (`teacherId` TEXT NOT NULL, `teacherName` TEXT NOT NULL, `dob` INTEGER NOT NULL, `address` TEXT NOT NULL, `exprience` TEXT NOT NULL, `dateOfJoing` TEXT NOT NULL, PRIMARY KEY (`teacherId`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Student` (`studentId` TEXT NOT NULL, `studentFirstName` TEXT NOT NULL, `studentLastName` TEXT NOT NULL, `gender` INTEGER NOT NULL, `cgpa` INTEGER NOT NULL, `classId` TEXT NOT NULL, `dob` INTEGER NOT NULL, `aadharNumber` INTEGER NOT NULL, `address` TEXT NOT NULL, `marksObtain` REAL NOT NULL, `attendsObtain` INTEGER NOT NULL, `joinIn` INTEGER NOT NULL, `fatherFirstName` TEXT NOT NULL, `fatherLastName` TEXT NOT NULL, `motherFirstName` TEXT NOT NULL, `motherLastName` TEXT NOT NULL, `gardiuanNumber` INTEGER NOT NULL, PRIMARY KEY (`studentId`))');
+            'CREATE TABLE IF NOT EXISTS `Student` (`studentId` TEXT NOT NULL, `studentFirstName` TEXT NOT NULL, `studentLastName` TEXT NOT NULL, `gender` TEXT NOT NULL, `cgpa` INTEGER NOT NULL, `classId` TEXT NOT NULL, `dob` INTEGER NOT NULL, `aadharNumber` INTEGER NOT NULL, `address` TEXT NOT NULL, `subCast` TEXT NOT NULL, `religion` TEXT NOT NULL, `marksObtain` REAL NOT NULL, `attendsObtain` INTEGER NOT NULL, `joinIn` INTEGER NOT NULL, `fatherFirstName` TEXT NOT NULL, `fatherLastName` TEXT NOT NULL, `motherFirstName` TEXT NOT NULL, `motherLastName` TEXT NOT NULL, `gardiuanNumber` INTEGER NOT NULL, PRIMARY KEY (`studentId`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -135,6 +135,8 @@ class _$StudentDao extends StudentDao {
                   'dob': item.dob,
                   'aadharNumber': item.aadharNumber,
                   'address': item.address,
+                  'subCast': item.subCast,
+                  'religion': item.religion,
                   'marksObtain': item.marksObtain,
                   'attendsObtain': item.attendsObtain,
                   'joinIn': item.joinIn,
@@ -172,7 +174,9 @@ class _$StudentDao extends StudentDao {
             row['motherLastName'] as String,
             row['gardiuanNumber'] as int,
             row['classId'] as String,
-            row['gender'] as int,
+            row['gender'] as String,
+            row['subCast'] as String,
+            row['religion'] as String,
             studentId: row['studentId'] as String));
   }
 
@@ -195,7 +199,9 @@ class _$StudentDao extends StudentDao {
             row['motherLastName'] as String,
             row['gardiuanNumber'] as int,
             row['classId'] as String,
-            row['gender'] as int,
+            row['gender'] as String,
+            row['subCast'] as String,
+            row['religion'] as String,
             studentId: row['studentId'] as String),
         arguments: [id]);
   }
