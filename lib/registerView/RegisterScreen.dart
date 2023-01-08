@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, library_private_types_in_public_api
+// ignore_for_file: file_names, library_private_types_in_public_api, non_constant_identifier_names
 
 import 'dart:developer';
 
@@ -55,12 +55,26 @@ class _RegisterScreen extends State<StatefulWidget> {
             padding: const EdgeInsets.all(8.0),
             child: ListView(
               children: [
-                const Center(
-                  child: Text(
-                    "Registration Form",
-                    style:
-                        TextStyle(color: AppColor.primaryColor, fontSize: 28),
-                  ),
+                Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: const Icon(Icons.arrow_back),
+                        ),
+                      ),
+                    ),
+                    const Center(
+                      child: Text(
+                        "Registration Form",
+                        style: TextStyle(
+                            color: AppColor.primaryColor, fontSize: 28),
+                      ),
+                    )
+                  ],
                 ),
                 TextFormField(
                   autocorrect: false,

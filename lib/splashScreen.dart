@@ -1,11 +1,15 @@
 // ignore_for_file: file_names, library_private_types_in_public_api
 
 import 'dart:async';
+import 'dart:convert';
+import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:studenthub/LoginScreen.dart';
 import 'package:studenthub/constant/colors.dart';
 import 'package:studenthub/database/HubDatabase.dart';
+import 'package:studenthub/service/ServersAPI.dart';
 
 import 'homeScreen.dart';
 
@@ -53,6 +57,16 @@ class _SplashScreenState extends State<SplashScreen> {
     ];
   }
 
+  void serverCheck() {
+    ServerAPI.ping().then((value) {
+      Map<String, dynamic> s = jsonDecode(value.body);
+      if (value.statusCode == 200) {
+        if (kDebugMode) log("Value : ${s['status']}", time: DateTime.now());
+        loginCheck();
+      }
+    });
+  }
+
   void loginCheck() async {
     final HubDatabase database =
         await $FloorHubDatabase.databaseBuilder('studentHub.db').build();
@@ -92,7 +106,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    loginCheck();
+    serverCheck();
     return Container(
       color: Colors.black,
       child: Center(

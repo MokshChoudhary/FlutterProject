@@ -6,17 +6,17 @@ import 'package:studenthub/database/Dao/TeacherDao.dart';
 import 'package:studenthub/database/HubDatabase.dart';
 
 class HubDBHelper {
-  // late HubDatabase db;
+  late HubDatabase db;
 
-  // Future<void> initDb() async {
-  //   db = await $FloorHubDatabase
-  //       .databaseBuilder('StudentHubDatabase.db')
-  //       .build();
-  // }
+  Future<void> initDb() async {
+    db = await $FloorHubDatabase
+        .databaseBuilder('StudentHubDatabase.db')
+        .build();
+  }
 
-  // StudentDao getStudentDao() => db.studentDao;
+  StudentDao getStudentDao() => db.studentDao;
 
-  // TeacherDao getTeacherDao() => db.teacherDao;
+  TeacherDao getTeacherDao() => db.teacherDao;
 
-  // LoginDao getUserDao() => db.loginDao;
+  LoginDao getUserDao() => db.loginDao;
 }

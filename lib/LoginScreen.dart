@@ -129,7 +129,7 @@ class _LoginScreen extends State<StatefulWidget> {
                             child: OutlinedButton(
                               onPressed: () {
                                 log("Loging button press $userIDValue , $passValue");
-                                if (userIDValue.isNotEmpty ||
+                                if (userIDValue.isNotEmpty &&
                                     passValue.isNotEmpty) {
                                   getdatabase().then((value) => {
                                         value.loginDao
