@@ -14,31 +14,36 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreen extends State<StatefulWidget> {
+  DateTime dobValue = DateTime.now();
+  String studentFnameValue = "";
+  String studentLnameValue = "";
+  String gender = "";
+  String sub_cast = "";
+  String relegin = "";
+  String aadharNumberValue = "";
+  String addressValue = "";
+  String joinDateValue = "";
+  String fatherNameValue = "";
+  String motherNameValue = "";
+  String gardiuanNumberValue = "";
+  List<String> genderList = ["Gender", "Male", "Female", "Other"];
+  String genderDropdownValue = "Gender";
+  List<String> religionList = [
+    "Religion",
+    "Hindi",
+    "Sikh",
+    "Jain",
+    "Buddisam",
+    "Krishan",
+    "Muslim"
+  ];
+  String religionDropDownValue = "Religion";
+
+  List<String> subList = ["SubCast", "Genral", "OBC", "SC", "ST"];
+  String subCastDropDownValue = "SubCast";
+
   @override
   Widget build(BuildContext context) {
-    final studentFnameController = TextEditingController();
-    final studentLnameController = TextEditingController();
-    final dobController = TextEditingController();
-    final aadharNumberController = TextEditingController();
-    final addressController = TextEditingController();
-    final joinDateController = TextEditingController();
-    final fatherNameController = TextEditingController();
-    final motherNameController = TextEditingController();
-    final gardiuanNumberController = TextEditingController();
-
-    String studentFnameValue = "";
-    String studentLnameValue = "";
-    String dobValue = DateTime.now().toString();
-    String gender = "";
-    String sub_cast = "";
-    String relegin = "";
-    String aadharNumberValue = "";
-    String addressValue = "";
-    String joinDateValue = "";
-    String fatherNameValue = "";
-    String motherNameValue = "";
-    String gardiuanNumberValue = "";
-
     return MaterialApp(
       debugShowCheckedModeBanner: true,
       home: MaterialApp(
@@ -57,36 +62,93 @@ class _RegisterScreen extends State<StatefulWidget> {
                         TextStyle(color: AppColor.primaryColor, fontSize: 28),
                   ),
                 ),
-                Center(
-                  child: TextFormField(
-                    autocorrect: false,
-                    validator: (value) {
-                      //do this later
-                    },
-                    controller: studentFnameController,
-                    decoration: const InputDecoration(
-                      hintText: "e.g, Itachi",
-                      border: UnderlineInputBorder(),
-                      labelText: 'First Name',
-                    ),
+                TextFormField(
+                  autocorrect: false,
+                  decoration: const InputDecoration(
+                    hintText: "e.g, Itachi",
+                    border: UnderlineInputBorder(),
+                    labelText: 'First Name',
                   ),
+                  onFieldSubmitted: (value) => studentFnameValue = value,
                 ),
                 TextFormField(
                   autocorrect: false,
-                  controller: studentLnameController,
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
                     labelText: 'Last Name',
-                    hintText: "Uchiha",
+                    hintText: "e.g, Uchiha",
                   ),
+                  onFieldSubmitted: (value) => studentLnameValue = value,
                 ),
+                DropdownButton<String>(
+                  value: genderDropdownValue,
+                  icon: const Icon(Icons.arrow_drop_down),
+                  underline: Container(
+                    height: 2,
+                  ),
+                  onChanged: (String? value) {
+                    // This is called when the user selects an item.
+                    setState(() {
+                      genderDropdownValue = value!;
+                    });
+                  },
+                  items:
+                      genderList.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+                DropdownButton<String>(
+                  value: religionDropDownValue,
+                  icon: const Icon(Icons.arrow_drop_down),
+                  underline: Container(
+                    height: 2,
+                  ),
+                  onChanged: (String? value) {
+                    // This is called when the user selects an item.
+                    setState(() {
+                      religionDropDownValue = value!;
+                    });
+                  },
+                  items: religionList
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+                DropdownButton(
+                    value: subCastDropDownValue,
+                    underline: Container(
+                      height: 2,
+                    ),
+                    items:
+                        subList.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (String? value) {
+                      // This is called when the user selects an item.
+                      setState(() {
+                        subCastDropDownValue = value!;
+                      });
+                    }),
                 GestureDetector(
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 0),
                     child: Row(
                       children: <Widget>[
-                        const Text("Select Date of Birth : "),
-                        Text(dobValue),
+                        Text(
+                          "Select Date of Birth : ${dobValue.toString().split(" ")[0]}",
+                          style: const TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
                         const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Icon(Icons.date_range),
@@ -99,65 +161,64 @@ class _RegisterScreen extends State<StatefulWidget> {
                       context: context,
                       firstDate: DateTime.utc(DateTime.now().year - 60),
                       lastDate: DateTime.now(),
-                      initialDate: DateTime.now(),
+                      initialDate: dobValue,
                     ).then((value) {
-                      setState(() {
-                        try {
-                          dobValue = value!.toString();
-                        } catch (e) {
-                          log(e.toString());
-                        }
-                      });
+                      try {
+                        setState(() {
+                          dobValue = value!;
+                        });
+                        dobValue = value!;
+                      } catch (e) {
+                        log(e.toString());
+                      }
                       log("Value : $dobValue");
+                      log("Gender : $gender");
                     });
                   },
                 ),
                 TextFormField(
                   autocorrect: false,
-                  controller: aadharNumberController,
+                  onFieldSubmitted: (value) => aadharNumberValue = value,
+                  validator: (value) {
+                    if (value!.length < 12) {}
+                  },
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
-                    labelText: 'Aadhar Cart',
+                    labelText: 'Aadhar Card',
                   ),
                 ),
                 TextFormField(
                   autocorrect: false,
-                  controller: addressController,
+                  maxLength: 4,
+                  onFieldSubmitted: (value) => addressValue = value,
+                  decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: 'Address Line 1',
+                      hintText:
+                          "House/Buldin, Street/Area, District, City/UT, Pin-Code"),
+                ),
+                TextFormField(
+                  autocorrect: false,
+                  onFieldSubmitted: (value) => motherNameValue = value,
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
-                    labelText: 'Address Line 1',
+                    labelText: 'Mother Name',
                   ),
                 ),
                 TextFormField(
                   autocorrect: false,
-                  controller: joinDateController,
+                  onFieldSubmitted: (value) => fatherNameValue = value,
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
-                    labelText: 'Address Line 2',
+                    labelText: 'Father Name',
                   ),
                 ),
                 TextFormField(
                   autocorrect: false,
-                  controller: fatherNameController,
+                  onFieldSubmitted: (value) => gardiuanNumberValue = value,
                   decoration: const InputDecoration(
                     border: UnderlineInputBorder(),
-                    labelText: 'Address Line 3',
-                  ),
-                ),
-                TextFormField(
-                  autocorrect: false,
-                  controller: motherNameController,
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'Enter your username',
-                  ),
-                ),
-                TextFormField(
-                  autocorrect: false,
-                  controller: gardiuanNumberController,
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'Enter your username',
+                    labelText: 'Gardiuan Name',
                   ),
                 ),
                 Padding(

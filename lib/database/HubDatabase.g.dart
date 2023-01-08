@@ -89,9 +89,9 @@ class _$HubDatabase extends HubDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Login` (`loginBy` INTEGER NOT NULL, `userId` TEXT NOT NULL, `password` TEXT NOT NULL, PRIMARY KEY (`loginBy`))');
+            'CREATE TABLE IF NOT EXISTS `Login` (`loginBy` INTEGER NOT NULL, `uniqueId` TEXT NOT NULL, `userId` TEXT NOT NULL, `password` TEXT NOT NULL, PRIMARY KEY (`uniqueId`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Teacher` (`teacherId` TEXT NOT NULL, `teacherName` TEXT NOT NULL, `dob` INTEGER NOT NULL, `address` TEXT NOT NULL, `exprience` TEXT NOT NULL, `dateOfJoing` TEXT NOT NULL, PRIMARY KEY (`teacherId`))');
+            'CREATE TABLE IF NOT EXISTS `Teacher` (`teacherId` TEXT NOT NULL, `teacherName` TEXT NOT NULL, `dob` INTEGER NOT NULL, `address` TEXT NOT NULL, `exprience` TEXT NOT NULL, `dateOfJoing` TEXT NOT NULL, `periodId` TEXT NOT NULL, PRIMARY KEY (`teacherId`))');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `Student` (`studentId` TEXT NOT NULL, `studentFirstName` TEXT NOT NULL, `studentLastName` TEXT NOT NULL, `gender` TEXT NOT NULL, `cgpa` INTEGER NOT NULL, `classId` TEXT NOT NULL, `dob` INTEGER NOT NULL, `aadharNumber` INTEGER NOT NULL, `address` TEXT NOT NULL, `subCast` TEXT NOT NULL, `religion` TEXT NOT NULL, `marksObtain` REAL NOT NULL, `attendsObtain` INTEGER NOT NULL, `joinIn` INTEGER NOT NULL, `fatherFirstName` TEXT NOT NULL, `fatherLastName` TEXT NOT NULL, `motherFirstName` TEXT NOT NULL, `motherLastName` TEXT NOT NULL, `gardiuanNumber` INTEGER NOT NULL, PRIMARY KEY (`studentId`))');
 
@@ -226,7 +226,8 @@ class _$TeacherDao extends TeacherDao {
                   'dob': item.dob,
                   'address': item.address,
                   'exprience': item.exprience,
-                  'dateOfJoing': item.dateOfJoing
+                  'dateOfJoing': item.dateOfJoing,
+                  'periodId': item.periodId
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -246,6 +247,7 @@ class _$TeacherDao extends TeacherDao {
             row['address'] as String,
             row['exprience'] as String,
             row['dateOfJoing'] as String,
+            row['periodId'] as String,
             teacherId: row['teacherId'] as String));
   }
 
@@ -258,6 +260,7 @@ class _$TeacherDao extends TeacherDao {
             row['address'] as String,
             row['exprience'] as String,
             row['dateOfJoing'] as String,
+            row['periodId'] as String,
             teacherId: row['teacherId'] as String),
         arguments: [id]);
   }
@@ -279,6 +282,7 @@ class _$LoginDao extends LoginDao {
             'Login',
             (Login item) => <String, Object?>{
                   'loginBy': item.loginBy,
+                  'uniqueId': item.uniqueId,
                   'userId': item.userId,
                   'password': item.password
                 });
@@ -295,6 +299,7 @@ class _$LoginDao extends LoginDao {
   Future<List<Login?>> findAllUser() async {
     return _queryAdapter.queryList('Select * from Student;',
         mapper: (Map<String, Object?> row) => Login(
+            uniqueId: row['uniqueId'] as String,
             loginBy: row['loginBy'] as int,
             userId: row['userId'] as String,
             password: row['password'] as String));
@@ -308,6 +313,7 @@ class _$LoginDao extends LoginDao {
     return _queryAdapter.queryList(
         'SELECT * FROM Student WHERE userId = ?1 AND password = ?2;',
         mapper: (Map<String, Object?> row) => Login(
+            uniqueId: row['uniqueId'] as String,
             loginBy: row['loginBy'] as int,
             userId: row['userId'] as String,
             password: row['password'] as String),

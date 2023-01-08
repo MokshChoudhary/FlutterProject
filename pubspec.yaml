@@ -60,19 +60,19 @@ dev_dependencies:
 #Application Launch icon
 
 flutter_icons:
-  image_path: "images/user/icon.png"
+  image_path: "images/icon.png"
   android: true
   ios: true
   web:
     generate: true
-    image_path: "images/user/icon.png"
+    image_path: "images/icon.png"
   windows:
     generate: true
-    image_path: "images/user/icon.png"
+    image_path: "images/icon.png"
     icon_size: 48
   macos:
     generate: true
-    image_path: "images/user/icon.png"
+    image_path: "images/icon.png"
 
 
 # For information on the generic Dart part of this file, see the
@@ -91,7 +91,7 @@ flutter:
     - images/user/icons8-contacts-512.png
     - images/user/iOS/icons8-contacts-48(@3x).png
     - images/user/Android/icons8-contacts-64(-xxxhdpi).png
-    - images/user/icon.png
+    - images/icon.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -11,8 +11,9 @@ class Teacher {
   final String address;
   final String exprience;
   final String dateOfJoing;
+  final String periodId;
 
   Teacher(this.teacherName, this.dob, this.address, this.exprience,
-      this.dateOfJoing,
+      this.dateOfJoing, this.periodId,
       {required this.teacherId});
 }

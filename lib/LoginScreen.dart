@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, library_private_types_in_public_api
 
 import 'dart:developer';
 
@@ -33,8 +33,8 @@ class _LoginScreen extends State<StatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final userIDController = TextEditingController();
-    final passController = TextEditingController();
+    String userIDValue = "";
+    String passValue = "";
 
     return MaterialApp(
       scaffoldMessengerKey: scaffoldCurrent,
@@ -95,9 +95,9 @@ class _LoginScreen extends State<StatefulWidget> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    TextFormField(
+                    TextField(
                       autocorrect: false,
-                      controller: userIDController,
+                      onChanged: (value) => userIDValue = value,
                       decoration: const InputDecoration(
                         border: UnderlineInputBorder(),
                         labelText: 'Enter your username',
@@ -105,15 +105,15 @@ class _LoginScreen extends State<StatefulWidget> {
                     ),
                     TextField(
                       autocorrect: false,
-                      obscureText: _passwordVisibity,
-                      controller: passController,
+                      obscureText: !_passwordVisibity,
+                      onChanged: (value) => passValue = value,
                       decoration: InputDecoration(
                         suffixIcon: IconButton(
                             onPressed: () {
                               _passwordVisibity = !_passwordVisibity;
                               setState(() {});
                             },
-                            icon: Icon(_passwordVisibity
+                            icon: Icon(!_passwordVisibity
                                 ? Icons.visibility
                                 : Icons.visibility_off)),
                         border: const UnderlineInputBorder(),
@@ -128,21 +128,20 @@ class _LoginScreen extends State<StatefulWidget> {
                           child: Center(
                             child: OutlinedButton(
                               onPressed: () {
-                                log("Loging button press ${userIDController.text} , ${passController.text}");
-                                if (userIDController.text.isNotEmpty ||
-                                    passController.text.isNotEmpty) {
+                                log("Loging button press $userIDValue , $passValue");
+                                if (userIDValue.isNotEmpty ||
+                                    passValue.isNotEmpty) {
                                   getdatabase().then((value) => {
                                         value.loginDao
-                                            .findUser(
-                                                userIDController.text.trim(),
-                                                passController.text.trim())
+                                            .findUser(userIDValue.trim(),
+                                                passValue.trim())
                                             .then((value) => {
                                                   Navigator.of(context)
                                                       .pushReplacement(
                                                     MaterialPageRoute(
                                                       builder: (BuildContext
                                                               context) =>
-                                                          LoginScreen(),
+                                                          const LoginScreen(),
                                                     ),
                                                   ),
                                                 }),
@@ -165,15 +164,15 @@ class _LoginScreen extends State<StatefulWidget> {
                           child: Center(
                             child: OutlinedButton(
                               onPressed: () {
-                                log("Register button press ${userIDController.text} , ${passController.text}");
-                                if (userIDController.text.isNotEmpty &&
-                                    passController.text.isNotEmpty) {
-                                  userIDController.text == "admin" &&
-                                          passController.text == "p@ssw0rd"
+                                log("Register button press $userIDValue , $passValue");
+                                if (userIDValue.isNotEmpty &&
+                                    passValue.isNotEmpty) {
+                                  userIDValue == "admin" &&
+                                          passValue == "p@ssw0rd"
                                       ? Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                             builder: (BuildContext context) =>
-                                                RegisterScreen(),
+                                                const RegisterScreen(),
                                           ),
                                         )
                                       : showSnackBar(
