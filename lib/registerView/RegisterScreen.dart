@@ -1,8 +1,10 @@
 // ignore_for_file: file_names, library_private_types_in_public_api, non_constant_identifier_names
 
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:studenthub/database/Student.dart';
 
 import '../constant/colors.dart';
 
@@ -203,7 +205,6 @@ class _RegisterScreen extends State<StatefulWidget> {
                 ),
                 TextFormField(
                   autocorrect: false,
-                  maxLength: 4,
                   onFieldSubmitted: (value) => addressValue = value,
                   decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
@@ -244,7 +245,31 @@ class _RegisterScreen extends State<StatefulWidget> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: OutlinedButton(
-                          onPressed: () => {},
+                          onPressed: () {
+                            var student = Student(
+                                studentFirstName: studentFnameValue,
+                                studentLastName: studentLnameValue,
+                                dob: dobValue.millisecondsSinceEpoch,
+                                cgpa: 0,
+                                aadharNumber: int.parse(aadharNumberValue),
+                                address: addressValue,
+                                marksObtain: 0,
+                                attendsObtain: 0,
+                                joinIn: DateTime.now().millisecondsSinceEpoch,
+                                fatherFirstName: fatherNameValue.split(" ")[0],
+                                fatherLastName: fatherNameValue.split(" ")[1],
+                                motherFirstName: motherNameValue.split(" ")[0],
+                                motherLastName: motherNameValue.split(" ")[1],
+                                gardiuanNumber: gardiuanNumberValue,
+                                classId: "",
+                                gender: genderDropdownValue,
+                                subCast: subCastDropDownValue,
+                                religion: religionDropDownValue,
+                                studentId: "studentId");
+
+                            var studentJson = jsonEncode(student);
+                            log(studentJson);
+                          },
                           child: Row(
                             children: const [Text("Submit"), Icon(Icons.check)],
                           ),

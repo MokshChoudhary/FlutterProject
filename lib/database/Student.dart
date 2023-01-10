@@ -27,26 +27,27 @@ class Student {
   final String fatherLastName;
   final String motherFirstName;
   final String motherLastName;
-  final int gardiuanNumber;
+  final String gardiuanNumber;
 
-  Student(
-      this.studentFirstName,
-      this.studentLastName,
-      this.dob,
-      this.cgpa,
-      this.aadharNumber,
-      this.address,
-      this.marksObtain,
-      this.attendsObtain,
-      this.joinIn,
-      this.fatherFirstName,
-      this.fatherLastName,
-      this.motherFirstName,
-      this.motherLastName,
-      this.gardiuanNumber,
-      this.classId,
-      this.gender,
-      this.subCast,
-      this.religion,
-      {required this.studentId});
+  Student({
+    required this.studentFirstName,
+    required this.studentLastName,
+    required this.dob,
+    required this.cgpa,
+    required this.aadharNumber,
+    required this.address,
+    required this.marksObtain,
+    required this.attendsObtain,
+    required this.joinIn,
+    required this.fatherFirstName,
+    required this.fatherLastName,
+    required this.motherFirstName,
+    required this.motherLastName,
+    required this.gardiuanNumber,
+    required this.classId,
+    required this.gender,
+    required this.subCast,
+    required this.religion,
+    required this.studentId,
+  });
 }
