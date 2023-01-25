@@ -93,7 +93,7 @@ class _$HubDatabase extends HubDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `Teacher` (`teacherId` TEXT NOT NULL, `teacherName` TEXT NOT NULL, `dob` INTEGER NOT NULL, `address` TEXT NOT NULL, `exprience` TEXT NOT NULL, `dateOfJoing` TEXT NOT NULL, `periodId` TEXT NOT NULL, PRIMARY KEY (`teacherId`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Student` (`studentId` TEXT NOT NULL, `studentFirstName` TEXT NOT NULL, `studentLastName` TEXT NOT NULL, `gender` TEXT NOT NULL, `cgpa` INTEGER NOT NULL, `classId` TEXT NOT NULL, `dob` INTEGER NOT NULL, `aadharNumber` INTEGER NOT NULL, `address` TEXT NOT NULL, `subCast` TEXT NOT NULL, `religion` TEXT NOT NULL, `marksObtain` REAL NOT NULL, `attendsObtain` INTEGER NOT NULL, `joinIn` INTEGER NOT NULL, `fatherFirstName` TEXT NOT NULL, `fatherLastName` TEXT NOT NULL, `motherFirstName` TEXT NOT NULL, `motherLastName` TEXT NOT NULL, `gardiuanNumber` INTEGER NOT NULL, PRIMARY KEY (`studentId`))');
+            'CREATE TABLE IF NOT EXISTS `Student` (`studentId` TEXT NOT NULL, `studentFirstName` TEXT NOT NULL, `studentLastName` TEXT NOT NULL, `gender` TEXT NOT NULL, `cgpa` INTEGER NOT NULL, `classId` TEXT NOT NULL, `dob` INTEGER NOT NULL, `aadharNumber` INTEGER NOT NULL, `address` TEXT NOT NULL, `subCast` TEXT NOT NULL, `religion` TEXT NOT NULL, `marksObtain` REAL NOT NULL, `attendsObtain` INTEGER NOT NULL, `joinIn` INTEGER NOT NULL, `fatherFirstName` TEXT NOT NULL, `fatherLastName` TEXT NOT NULL, `motherFirstName` TEXT NOT NULL, `motherLastName` TEXT NOT NULL, `gardiuanNumber` TEXT NOT NULL, PRIMARY KEY (`studentId`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -159,24 +159,24 @@ class _$StudentDao extends StudentDao {
   Future<List<Student>> findAllStudent() async {
     return _queryAdapter.queryList('Select * from Student',
         mapper: (Map<String, Object?> row) => Student(
-            row['studentFirstName'] as String,
-            row['studentLastName'] as String,
-            row['dob'] as int,
-            row['cgpa'] as int,
-            row['aadharNumber'] as int,
-            row['address'] as String,
-            row['marksObtain'] as double,
-            row['attendsObtain'] as int,
-            row['joinIn'] as int,
-            row['fatherFirstName'] as String,
-            row['fatherLastName'] as String,
-            row['motherFirstName'] as String,
-            row['motherLastName'] as String,
-            row['gardiuanNumber'] as int,
-            row['classId'] as String,
-            row['gender'] as String,
-            row['subCast'] as String,
-            row['religion'] as String,
+            studentFirstName: row['studentFirstName'] as String,
+            studentLastName: row['studentLastName'] as String,
+            dob: row['dob'] as int,
+            cgpa: row['cgpa'] as int,
+            aadharNumber: row['aadharNumber'] as int,
+            address: row['address'] as String,
+            marksObtain: row['marksObtain'] as double,
+            attendsObtain: row['attendsObtain'] as int,
+            joinIn: row['joinIn'] as int,
+            fatherFirstName: row['fatherFirstName'] as String,
+            fatherLastName: row['fatherLastName'] as String,
+            motherFirstName: row['motherFirstName'] as String,
+            motherLastName: row['motherLastName'] as String,
+            gardiuanNumber: row['gardiuanNumber'] as String,
+            classId: row['classId'] as String,
+            gender: row['gender'] as String,
+            subCast: row['subCast'] as String,
+            religion: row['religion'] as String,
             studentId: row['studentId'] as String));
   }
 
@@ -184,24 +184,24 @@ class _$StudentDao extends StudentDao {
   Future<Student?> findStudentById(String id) async {
     return _queryAdapter.query('Select * from Student Where studentId = ?1',
         mapper: (Map<String, Object?> row) => Student(
-            row['studentFirstName'] as String,
-            row['studentLastName'] as String,
-            row['dob'] as int,
-            row['cgpa'] as int,
-            row['aadharNumber'] as int,
-            row['address'] as String,
-            row['marksObtain'] as double,
-            row['attendsObtain'] as int,
-            row['joinIn'] as int,
-            row['fatherFirstName'] as String,
-            row['fatherLastName'] as String,
-            row['motherFirstName'] as String,
-            row['motherLastName'] as String,
-            row['gardiuanNumber'] as int,
-            row['classId'] as String,
-            row['gender'] as String,
-            row['subCast'] as String,
-            row['religion'] as String,
+            studentFirstName: row['studentFirstName'] as String,
+            studentLastName: row['studentLastName'] as String,
+            dob: row['dob'] as int,
+            cgpa: row['cgpa'] as int,
+            aadharNumber: row['aadharNumber'] as int,
+            address: row['address'] as String,
+            marksObtain: row['marksObtain'] as double,
+            attendsObtain: row['attendsObtain'] as int,
+            joinIn: row['joinIn'] as int,
+            fatherFirstName: row['fatherFirstName'] as String,
+            fatherLastName: row['fatherLastName'] as String,
+            motherFirstName: row['motherFirstName'] as String,
+            motherLastName: row['motherLastName'] as String,
+            gardiuanNumber: row['gardiuanNumber'] as String,
+            classId: row['classId'] as String,
+            gender: row['gender'] as String,
+            subCast: row['subCast'] as String,
+            religion: row['religion'] as String,
             studentId: row['studentId'] as String),
         arguments: [id]);
   }

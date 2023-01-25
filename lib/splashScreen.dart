@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:studenthub/LoginScreen.dart';
@@ -57,12 +58,44 @@ class _SplashScreenState extends State<SplashScreen> {
     ];
   }
 
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Connection Alert'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Server Connection...'),
+                Text('Could not able to connect with server!'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void serverCheck() {
     ServerAPI.ping().then((value) {
-      Map<String, dynamic> s = jsonDecode(value.body);
-      if (value.statusCode == 200) {
-        if (kDebugMode) log("Value : ${s['status']}", time: DateTime.now());
-        loginCheck();
+      if (value != Null) {
+        Map<String, dynamic> s = jsonDecode((value as http.Response).body);
+        if (value.statusCode == 200) {
+          if (kDebugMode) log("Value : ${s['status']}", time: DateTime.now());
+          loginCheck();
+        }
+      } else {
+        _showMyDialog();
       }
     });
   }
