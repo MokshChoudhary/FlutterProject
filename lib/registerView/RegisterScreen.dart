@@ -2,11 +2,15 @@
 
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:studenthub/constant/server.dart';
 import 'package:studenthub/database/Student.dart';
 
 import '../constant/colors.dart';
+import '../service/ServersAPI.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -269,6 +273,11 @@ class _RegisterScreen extends State<StatefulWidget> {
 
                             var studentJson = jsonEncode(student);
                             log(studentJson);
+                            var header = <String, String>{};
+                            header["Accept"] = "*/*";
+                            ServerAPI.POST(
+                                AppServer.url + AppServer.student_register,
+                                header: header);
                           },
                           child: Row(
                             children: const [Text("Submit"), Icon(Icons.check)],
