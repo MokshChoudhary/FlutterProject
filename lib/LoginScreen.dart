@@ -3,8 +3,11 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:studenthub/constant/colors.dart';
+import 'package:studenthub/constant/server.dart';
 import 'package:studenthub/registerView/registerScreen.dart';
+import 'package:studenthub/service/ServersAPI.dart';
 
 import 'database/HubDatabase.dart';
 
@@ -131,21 +134,36 @@ class _LoginScreen extends State<StatefulWidget> {
                                 log("Loging button press $userIDValue , $passValue");
                                 if (userIDValue.isNotEmpty &&
                                     passValue.isNotEmpty) {
-                                  getdatabase().then((value) => {
-                                        value.loginDao
-                                            .findUser(userIDValue.trim(),
-                                                passValue.trim())
-                                            .then((value) => {
-                                                  Navigator.of(context)
-                                                      .pushReplacement(
-                                                    MaterialPageRoute(
-                                                      builder: (BuildContext
-                                                              context) =>
-                                                          const LoginScreen(),
-                                                    ),
-                                                  ),
-                                                }),
-                                      });
+                                  try {
+                                    getdatabase().then((db) => {
+                                          db.loginDao.getCount().then((count) =>
+                                              {
+                                                if(count != null && count > 0)
+                                                //check in the local database
+                                                db.loginDao
+                                                    .findUser(
+                                                        userIDValue.trim(),
+                                                        passValue.trim())
+                                                    .then((value) => {
+                                                          Navigator.of(context)
+                                                              .pushReplacement(
+                                                            MaterialPageRoute(
+                                                              builder: (BuildContext
+                                                                      context) =>
+                                                                  const LoginScreen(),
+                                                            ),
+                                                          ),
+                                                        })
+                                                else
+                                                  //Check in the server database
+                                                  //ServerAPI.POST()
+
+                                              })
+                                        });
+                                  } catch (e) {
+                                    log(e.toString());
+                                    showSnackBar("Something went wrong!!");
+                                  }
                                 } else {
                                   showSnackBar("Pleas enter userID & password");
                                 }
