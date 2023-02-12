@@ -138,26 +138,32 @@ class _LoginScreen extends State<StatefulWidget> {
                                     getdatabase().then((db) => {
                                           db.loginDao.getCount().then((count) =>
                                               {
-                                                if(count != null && count > 0)
-                                                //check in the local database
-                                                db.loginDao
-                                                    .findUser(
-                                                        userIDValue.trim(),
-                                                        passValue.trim())
-                                                    .then((value) => {
-                                                          Navigator.of(context)
-                                                              .pushReplacement(
-                                                            MaterialPageRoute(
-                                                              builder: (BuildContext
-                                                                      context) =>
-                                                                  const LoginScreen(),
+                                                if (count != null && count > 0)
+                                                  //check in the local database
+                                                  db.loginDao
+                                                      .findUser(
+                                                          userIDValue.trim(),
+                                                          passValue.trim())
+                                                      .then((value) => {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pushReplacement(
+                                                              MaterialPageRoute(
+                                                                builder: (BuildContext
+                                                                        context) =>
+                                                                    const LoginScreen(),
+                                                              ),
                                                             ),
-                                                          ),
-                                                        })
+                                                          })
                                                 else
-                                                  //Check in the server database
-                                                  //ServerAPI.POST()
-
+                                                  {
+                                                    //Check in the server database
+                                                    ServerAPI.POST_STRING(
+                                                        AppServer.url +
+                                                            AppServer
+                                                                .student_login,
+                                                        param: "{ \"login\" : $userIDValue , \"password\" : $passValue}")
+                                                  }
                                               })
                                         });
                                   } catch (e) {

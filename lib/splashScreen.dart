@@ -78,6 +78,7 @@ class _SplashScreenState extends State<SplashScreen> {
               child: const Text('Ok'),
               onPressed: () {
                 Navigator.of(context).pop();
+                serverCheck();
               },
             ),
           ],

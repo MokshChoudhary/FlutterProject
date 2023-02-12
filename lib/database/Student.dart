@@ -28,6 +28,7 @@ class Student {
   final String motherFirstName;
   final String motherLastName;
   final String gardiuanNumber;
+  final String password;
 
   Student({
     required this.studentFirstName,
@@ -49,5 +50,6 @@ class Student {
     required this.subCast,
     required this.religion,
     required this.studentId,
+    required this.password,
   });
 }

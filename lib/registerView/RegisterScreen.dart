@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -32,6 +33,8 @@ class _RegisterScreen extends State<StatefulWidget> {
   String fatherNameValue = "";
   String motherNameValue = "";
   String gardiuanNumberValue = "";
+  String re_passwordValue = "";
+  String passwordValue = "";
   List<String> genderList = ["Gender", "Male", "Female", "Other"];
   String genderDropdownValue = "Gender";
   List<String> religionList = [
@@ -47,6 +50,33 @@ class _RegisterScreen extends State<StatefulWidget> {
 
   List<String> subList = ["SubCast", "Genral", "OBC", "SC", "ST"];
   String subCastDropDownValue = "SubCast";
+
+  Future<void> _showMyDialog(String msg) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Connection Alert'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(msg),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -240,6 +270,22 @@ class _RegisterScreen extends State<StatefulWidget> {
                     labelText: 'Gardiuan Name',
                   ),
                 ),
+                TextFormField(
+                  autocorrect: false,
+                  onFieldSubmitted: (value) => passwordValue = value,
+                  decoration: const InputDecoration(
+                    border: UnderlineInputBorder(),
+                    labelText: 'Password',
+                  ),
+                ),
+                TextFormField(
+                  autocorrect: false,
+                  onFieldSubmitted: (value) => re_passwordValue = value,
+                  decoration: const InputDecoration(
+                    border: UnderlineInputBorder(),
+                    labelText: 'Re-Enter Password',
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -250,34 +296,42 @@ class _RegisterScreen extends State<StatefulWidget> {
                         alignment: Alignment.centerLeft,
                         child: OutlinedButton(
                           onPressed: () {
-                            var student = Student(
-                                studentFirstName: studentFnameValue,
-                                studentLastName: studentLnameValue,
-                                dob: dobValue.millisecondsSinceEpoch,
-                                cgpa: 0,
-                                aadharNumber: int.parse(aadharNumberValue),
-                                address: addressValue,
-                                marksObtain: 0,
-                                attendsObtain: 0,
-                                joinIn: DateTime.now().millisecondsSinceEpoch,
-                                fatherFirstName: fatherNameValue.split(" ")[0],
-                                fatherLastName: fatherNameValue.split(" ")[1],
-                                motherFirstName: motherNameValue.split(" ")[0],
-                                motherLastName: motherNameValue.split(" ")[1],
-                                gardiuanNumber: gardiuanNumberValue,
-                                classId: "",
-                                gender: genderDropdownValue,
-                                subCast: subCastDropDownValue,
-                                religion: religionDropDownValue,
-                                studentId: "studentId");
+                            if (passwordValue != re_passwordValue) {
+                              _showMyDialog("Password doesn't match!!");
+                            } else {
+                              var student = Student(
+                                  studentFirstName: studentFnameValue,
+                                  studentLastName: studentLnameValue,
+                                  dob: dobValue.millisecondsSinceEpoch,
+                                  cgpa: 0,
+                                  aadharNumber: int.parse(aadharNumberValue),
+                                  address: addressValue,
+                                  marksObtain: 0,
+                                  attendsObtain: 0,
+                                  joinIn: DateTime.now().millisecondsSinceEpoch,
+                                  fatherFirstName:
+                                  fatherNameValue.split(" ")[0],
+                                  fatherLastName: fatherNameValue.split(" ")[1],
+                                  motherFirstName:
+                                  motherNameValue.split(" ")[0],
+                                  motherLastName: motherNameValue.split(" ")[1],
+                                  gardiuanNumber: gardiuanNumberValue,
+                                  classId: "",
+                                  gender: genderDropdownValue,
+                                  subCast: subCastDropDownValue,
+                                  religion: religionDropDownValue,
+                                  studentId: "studentId",
+                                  password: passwordValue);
 
-                            var studentJson = jsonEncode(student);
-                            log(studentJson);
-                            var header = <String, String>{};
-                            header["Accept"] = "*/*";
-                            ServerAPI.POST(
-                                AppServer.url + AppServer.student_register,
-                                header: header);
+                              var studentJson = jsonEncode(student);
+                              log(studentJson);
+                              var header = <String, String>{};
+                              header["Accept"] = "*/*";
+                              ServerAPI.POST_STRING(
+                                  AppServer.url + AppServer.student_register,
+                                  header: header,
+                                  param: studentJson);
+                            }
                           },
                           child: Row(
                             children: const [Text("Submit"), Icon(Icons.check)],
