@@ -30,6 +30,7 @@ class Student {
   final String gardiuanNumber;
   final String password;
 
+
   Student({
     required this.studentFirstName,
     required this.studentLastName,

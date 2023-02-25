@@ -1,9 +1,10 @@
-// ignore_for_file: file_names, library_private_types_in_public_api
+// ignore_for_file: file_names, library_private_types_in_public_api, unused_local_variable, use_build_context_synchronously
 
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:floor/floor.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'package:studenthub/constant/colors.dart';
 import 'package:studenthub/database/HubDatabase.dart';
 import 'package:studenthub/service/ServersAPI.dart';
 
+import 'database/Setting.dart';
 import 'homeScreen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -59,6 +61,8 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _showMyDialog() async {
+    final HubDatabase database =
+        await $FloorHubDatabase.databaseBuilder('studentHub.db').build();
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -75,7 +79,24 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Ok'),
+                onPressed: () {
+                  try {
+                    Future<List<Setting>> setting =
+                        database.settingDao.getAllSettings();
+                    setting.then((value) => {
+                          if (value.isNotEmpty)
+                            {
+                              database.settingDao
+                                  .updateSetting(Setting(true, 0))
+                            }
+                        });
+                  } catch (e) {
+                    log(" Message $e");
+                  }
+                },
+                child: const Text("Offline Mode")),
+            TextButton(
+              child: const Text('Retry'),
               onPressed: () {
                 Navigator.of(context).pop();
                 serverCheck();

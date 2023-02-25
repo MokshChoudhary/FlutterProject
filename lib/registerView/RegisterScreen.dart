@@ -2,11 +2,8 @@
 
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:ffi';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:studenthub/constant/server.dart';
 import 'package:studenthub/database/Student.dart';
 
@@ -310,10 +307,10 @@ class _RegisterScreen extends State<StatefulWidget> {
                                   attendsObtain: 0,
                                   joinIn: DateTime.now().millisecondsSinceEpoch,
                                   fatherFirstName:
-                                  fatherNameValue.split(" ")[0],
+                                      fatherNameValue.split(" ")[0],
                                   fatherLastName: fatherNameValue.split(" ")[1],
                                   motherFirstName:
-                                  motherNameValue.split(" ")[0],
+                                      motherNameValue.split(" ")[0],
                                   motherLastName: motherNameValue.split(" ")[1],
                                   gardiuanNumber: gardiuanNumberValue,
                                   classId: "",

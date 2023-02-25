@@ -67,6 +67,8 @@ class _$HubDatabase extends HubDatabase {
 
   LoginDao? _loginDaoInstance;
 
+  SettingDao? _settingDaoInstance;
+
   Future<sqflite.Database> open(
     String path,
     List<Migration> migrations, [
@@ -94,6 +96,8 @@ class _$HubDatabase extends HubDatabase {
             'CREATE TABLE IF NOT EXISTS `Teacher` (`teacherId` TEXT NOT NULL, `teacherName` TEXT NOT NULL, `dob` INTEGER NOT NULL, `address` TEXT NOT NULL, `exprience` TEXT NOT NULL, `dateOfJoing` TEXT NOT NULL, `periodId` TEXT NOT NULL, PRIMARY KEY (`teacherId`))');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `Student` (`studentId` TEXT NOT NULL, `studentFirstName` TEXT NOT NULL, `studentLastName` TEXT NOT NULL, `gender` TEXT NOT NULL, `cgpa` INTEGER NOT NULL, `classId` TEXT NOT NULL, `dob` INTEGER NOT NULL, `aadharNumber` INTEGER NOT NULL, `address` TEXT NOT NULL, `subCast` TEXT NOT NULL, `religion` TEXT NOT NULL, `marksObtain` REAL NOT NULL, `attendsObtain` INTEGER NOT NULL, `joinIn` INTEGER NOT NULL, `fatherFirstName` TEXT NOT NULL, `fatherLastName` TEXT NOT NULL, `motherFirstName` TEXT NOT NULL, `motherLastName` TEXT NOT NULL, `gardiuanNumber` TEXT NOT NULL, `password` TEXT NOT NULL, PRIMARY KEY (`studentId`))');
+        await database.execute(
+            'CREATE TABLE IF NOT EXISTS `Setting` (`id` INTEGER NOT NULL, `isOnline` INTEGER NOT NULL, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -114,6 +118,11 @@ class _$HubDatabase extends HubDatabase {
   @override
   LoginDao get loginDao {
     return _loginDaoInstance ??= _$LoginDao(database, changeListener);
+  }
+
+  @override
+  SettingDao get settingDao {
+    return _settingDaoInstance ??= _$SettingDao(database, changeListener);
   }
 }
 
@@ -310,7 +319,7 @@ class _$LoginDao extends LoginDao {
 
   @override
   Future<int?> getCount() async {
-    await _queryAdapter.queryNoReturn('Select COUNT from Student');
+    await _queryAdapter.queryNoReturn('Select * from Student;');
   }
 
   @override
@@ -332,5 +341,55 @@ class _$LoginDao extends LoginDao {
   Future<int> insertUser(Login user) {
     return _loginInsertionAdapter.insertAndReturnId(
         user, OnConflictStrategy.abort);
+  }
+}
+
+class _$SettingDao extends SettingDao {
+  _$SettingDao(
+    this.database,
+    this.changeListener,
+  )   : _queryAdapter = QueryAdapter(database),
+        _settingInsertionAdapter = InsertionAdapter(
+            database,
+            'Setting',
+            (Setting item) => <String, Object?>{
+                  'id': item.id,
+                  'isOnline': item.isOnline ? 1 : 0
+                }),
+        _settingUpdateAdapter = UpdateAdapter(
+            database,
+            'Setting',
+            ['id'],
+            (Setting item) => <String, Object?>{
+                  'id': item.id,
+                  'isOnline': item.isOnline ? 1 : 0
+                });
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<Setting> _settingInsertionAdapter;
+
+  final UpdateAdapter<Setting> _settingUpdateAdapter;
+
+  @override
+  Future<List<Setting>> getAllSettings() async {
+    return _queryAdapter.queryList('Select * from Setting',
+        mapper: (Map<String, Object?> row) =>
+            Setting((row['isOnline'] as int) != 0, row['id'] as int));
+  }
+
+  @override
+  Future<void> insertSetting(Setting setting) async {
+    await _settingInsertionAdapter.insert(setting, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<int> updateSetting(Setting setting) {
+    return _settingUpdateAdapter.updateAndReturnChangedRows(
+        setting, OnConflictStrategy.abort);
   }
 }

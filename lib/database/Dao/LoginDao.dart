@@ -7,10 +7,11 @@ abstract class LoginDao {
   @Query('Select * from Student;')
   Future<List<Login?>> findAllUser();
 
-  @Query("Select COUNT from Student")
+  @Query("Select * from Student;")
   Future<int?> getCount();
 
-  @Query('SELECT * FROM Student WHERE userId = :userId AND password = :password;')
+  @Query(
+      'SELECT * FROM Student WHERE userId = :userId AND password = :password;')
   Future<List<Login?>> findUser(String userId, String password);
 
   @insert

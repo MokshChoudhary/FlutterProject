@@ -4,5 +4,5 @@ class AppServer {
   static const url = "http://localhost:8000/";
   static const version = "version";
   static const student_register = "student_register";
-  static const student_login = "student";
+  static const student_login = "student_login";
 }
