@@ -91,13 +91,13 @@ class _$HubDatabase extends HubDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Login` (`loginBy` INTEGER NOT NULL, `uniqueId` TEXT NOT NULL, `userId` TEXT NOT NULL, `password` TEXT NOT NULL, PRIMARY KEY (`uniqueId`))');
+            'CREATE TABLE IF NOT EXISTS `LoginData` (`loginBy` INTEGER NOT NULL, `uniqueId` TEXT NOT NULL, `userId` TEXT NOT NULL, `password` TEXT NOT NULL, PRIMARY KEY (`uniqueId`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Teacher` (`teacherId` TEXT NOT NULL, `teacherName` TEXT NOT NULL, `dob` INTEGER NOT NULL, `address` TEXT NOT NULL, `exprience` TEXT NOT NULL, `dateOfJoing` TEXT NOT NULL, `periodId` TEXT NOT NULL, PRIMARY KEY (`teacherId`))');
+            'CREATE TABLE IF NOT EXISTS `TeacherData` (`teacherId` TEXT NOT NULL, `teacherName` TEXT NOT NULL, `dob` INTEGER NOT NULL, `address` TEXT NOT NULL, `exprience` TEXT NOT NULL, `dateOfJoing` TEXT NOT NULL, `periodId` TEXT NOT NULL, PRIMARY KEY (`teacherId`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Student` (`studentId` TEXT NOT NULL, `studentFirstName` TEXT NOT NULL, `studentLastName` TEXT NOT NULL, `gender` TEXT NOT NULL, `cgpa` INTEGER NOT NULL, `classId` TEXT NOT NULL, `dob` INTEGER NOT NULL, `aadharNumber` INTEGER NOT NULL, `address` TEXT NOT NULL, `subCast` TEXT NOT NULL, `religion` TEXT NOT NULL, `marksObtain` REAL NOT NULL, `attendsObtain` INTEGER NOT NULL, `joinIn` INTEGER NOT NULL, `fatherFirstName` TEXT NOT NULL, `fatherLastName` TEXT NOT NULL, `motherFirstName` TEXT NOT NULL, `motherLastName` TEXT NOT NULL, `gardiuanNumber` TEXT NOT NULL, `password` TEXT NOT NULL, PRIMARY KEY (`studentId`))');
+            'CREATE TABLE IF NOT EXISTS `StudentData` (`studentId` TEXT NOT NULL, `studentFirstName` TEXT NOT NULL, `studentLastName` TEXT NOT NULL, `gender` TEXT NOT NULL, `cgpa` INTEGER NOT NULL, `classId` TEXT NOT NULL, `dob` INTEGER NOT NULL, `aadharNumber` INTEGER NOT NULL, `address` TEXT NOT NULL, `subCast` TEXT NOT NULL, `religion` TEXT NOT NULL, `marksObtain` REAL NOT NULL, `attendsObtain` INTEGER NOT NULL, `joinIn` INTEGER NOT NULL, `fatherFirstName` TEXT NOT NULL, `fatherLastName` TEXT NOT NULL, `motherFirstName` TEXT NOT NULL, `motherLastName` TEXT NOT NULL, `gardiuanNumber` TEXT NOT NULL, `password` TEXT NOT NULL, PRIMARY KEY (`studentId`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Setting` (`id` INTEGER NOT NULL, `isOnline` INTEGER NOT NULL, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `SettingData` (`id` INTEGER NOT NULL, `isOnline` INTEGER NOT NULL, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -131,10 +131,10 @@ class _$StudentDao extends StudentDao {
     this.database,
     this.changeListener,
   )   : _queryAdapter = QueryAdapter(database),
-        _studentInsertionAdapter = InsertionAdapter(
+        _studentDataInsertionAdapter = InsertionAdapter(
             database,
-            'Student',
-            (Student item) => <String, Object?>{
+            'StudentData',
+            (StudentData item) => <String, Object?>{
                   'studentId': item.studentId,
                   'studentFirstName': item.studentFirstName,
                   'studentLastName': item.studentLastName,
@@ -163,12 +163,12 @@ class _$StudentDao extends StudentDao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<Student> _studentInsertionAdapter;
+  final InsertionAdapter<StudentData> _studentDataInsertionAdapter;
 
   @override
-  Future<List<Student>> findAllStudent() async {
+  Future<List<StudentData>> findAllStudent() async {
     return _queryAdapter.queryList('Select * from Student',
-        mapper: (Map<String, Object?> row) => Student(
+        mapper: (Map<String, Object?> row) => StudentData(
             studentFirstName: row['studentFirstName'] as String,
             studentLastName: row['studentLastName'] as String,
             dob: row['dob'] as int,
@@ -192,9 +192,9 @@ class _$StudentDao extends StudentDao {
   }
 
   @override
-  Future<Student?> findStudentById(String id) async {
+  Future<StudentData?> findStudentById(String id) async {
     return _queryAdapter.query('Select * from Student Where studentId = ?1',
-        mapper: (Map<String, Object?> row) => Student(
+        mapper: (Map<String, Object?> row) => StudentData(
             studentFirstName: row['studentFirstName'] as String,
             studentLastName: row['studentLastName'] as String,
             dob: row['dob'] as int,
@@ -214,13 +214,13 @@ class _$StudentDao extends StudentDao {
             subCast: row['subCast'] as String,
             religion: row['religion'] as String,
             studentId: row['studentId'] as String,
-            password: row['password'] as String),
-        arguments: [id]);
+            password: row['password'] as String));
   }
 
   @override
-  Future<void> insertStudent(Student student) async {
-    await _studentInsertionAdapter.insert(student, OnConflictStrategy.abort);
+  Future<void> insertStudent(StudentData student) async {
+    await _studentDataInsertionAdapter.insert(
+        student, OnConflictStrategy.abort);
   }
 }
 
@@ -229,10 +229,10 @@ class _$TeacherDao extends TeacherDao {
     this.database,
     this.changeListener,
   )   : _queryAdapter = QueryAdapter(database),
-        _teacherInsertionAdapter = InsertionAdapter(
+        _teacherDataInsertionAdapter = InsertionAdapter(
             database,
-            'Teacher',
-            (Teacher item) => <String, Object?>{
+            'TeacherData',
+            (TeacherData item) => <String, Object?>{
                   'teacherId': item.teacherId,
                   'teacherName': item.teacherName,
                   'dob': item.dob,
@@ -248,12 +248,12 @@ class _$TeacherDao extends TeacherDao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<Teacher> _teacherInsertionAdapter;
+  final InsertionAdapter<TeacherData> _teacherDataInsertionAdapter;
 
   @override
-  Future<List<Teacher>> findAllTeacher() async {
+  Future<List<TeacherData>> findAllTeacher() async {
     return _queryAdapter.queryList('Select * from Student',
-        mapper: (Map<String, Object?> row) => Teacher(
+        mapper: (Map<String, Object?> row) => TeacherData(
             row['teacherName'] as String,
             row['dob'] as int,
             row['address'] as String,
@@ -264,9 +264,9 @@ class _$TeacherDao extends TeacherDao {
   }
 
   @override
-  Future<Teacher?> findTeacherById(String id) async {
+  Future<TeacherData?> findTeacherById(String id) async {
     return _queryAdapter.query('Select * from Student Where studentId = ?1',
-        mapper: (Map<String, Object?> row) => Teacher(
+        mapper: (Map<String, Object?> row) => TeacherData(
             row['teacherName'] as String,
             row['dob'] as int,
             row['address'] as String,
@@ -278,8 +278,8 @@ class _$TeacherDao extends TeacherDao {
   }
 
   @override
-  Future<int> insertTeacher(Teacher teacher) {
-    return _teacherInsertionAdapter.insertAndReturnId(
+  Future<int> insertTeacher(TeacherData teacher) {
+    return _teacherDataInsertionAdapter.insertAndReturnId(
         teacher, OnConflictStrategy.abort);
   }
 }
@@ -289,10 +289,10 @@ class _$LoginDao extends LoginDao {
     this.database,
     this.changeListener,
   )   : _queryAdapter = QueryAdapter(database),
-        _loginInsertionAdapter = InsertionAdapter(
+        _loginDataInsertionAdapter = InsertionAdapter(
             database,
-            'Login',
-            (Login item) => <String, Object?>{
+            'LoginData',
+            (LoginData item) => <String, Object?>{
                   'loginBy': item.loginBy,
                   'uniqueId': item.uniqueId,
                   'userId': item.userId,
@@ -305,12 +305,12 @@ class _$LoginDao extends LoginDao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<Login> _loginInsertionAdapter;
+  final InsertionAdapter<LoginData> _loginDataInsertionAdapter;
 
   @override
-  Future<List<Login?>> findAllUser() async {
+  Future<List<LoginData?>> findAllUser() async {
     return _queryAdapter.queryList('Select * from Student;',
-        mapper: (Map<String, Object?> row) => Login(
+        mapper: (Map<String, Object?> row) => LoginData(
             uniqueId: row['uniqueId'] as String,
             loginBy: row['loginBy'] as int,
             userId: row['userId'] as String,
@@ -319,17 +319,17 @@ class _$LoginDao extends LoginDao {
 
   @override
   Future<int?> getCount() async {
-    await _queryAdapter.queryNoReturn('Select * from Student;');
+    await _queryAdapter.queryNoReturn('Select COUNT(*) from Student;');
   }
 
   @override
-  Future<List<Login?>> findUser(
+  Future<List<LoginData?>> findUser(
     String userId,
     String password,
   ) async {
     return _queryAdapter.queryList(
         'SELECT * FROM Student WHERE userId = ?1 AND password = ?2;',
-        mapper: (Map<String, Object?> row) => Login(
+        mapper: (Map<String, Object?> row) => LoginData(
             uniqueId: row['uniqueId'] as String,
             loginBy: row['loginBy'] as int,
             userId: row['userId'] as String,
@@ -338,8 +338,8 @@ class _$LoginDao extends LoginDao {
   }
 
   @override
-  Future<int> insertUser(Login user) {
-    return _loginInsertionAdapter.insertAndReturnId(
+  Future<int> insertUser(LoginData user) {
+    return _loginDataInsertionAdapter.insertAndReturnId(
         user, OnConflictStrategy.abort);
   }
 }
@@ -349,18 +349,18 @@ class _$SettingDao extends SettingDao {
     this.database,
     this.changeListener,
   )   : _queryAdapter = QueryAdapter(database),
-        _settingInsertionAdapter = InsertionAdapter(
+        _settingDataInsertionAdapter = InsertionAdapter(
             database,
-            'Setting',
-            (Setting item) => <String, Object?>{
+            'SettingData',
+            (SettingData item) => <String, Object?>{
                   'id': item.id,
                   'isOnline': item.isOnline ? 1 : 0
                 }),
-        _settingUpdateAdapter = UpdateAdapter(
+        _settingDataUpdateAdapter = UpdateAdapter(
             database,
-            'Setting',
+            'SettingData',
             ['id'],
-            (Setting item) => <String, Object?>{
+            (SettingData item) => <String, Object?>{
                   'id': item.id,
                   'isOnline': item.isOnline ? 1 : 0
                 });
@@ -371,25 +371,26 @@ class _$SettingDao extends SettingDao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<Setting> _settingInsertionAdapter;
+  final InsertionAdapter<SettingData> _settingDataInsertionAdapter;
 
-  final UpdateAdapter<Setting> _settingUpdateAdapter;
+  final UpdateAdapter<SettingData> _settingDataUpdateAdapter;
 
   @override
-  Future<List<Setting>> getAllSettings() async {
+  Future<List<SettingData>> getAllSettings() async {
     return _queryAdapter.queryList('Select * from Setting',
         mapper: (Map<String, Object?> row) =>
-            Setting((row['isOnline'] as int) != 0, row['id'] as int));
+            SettingData((row['isOnline'] as int) != 0, row['id'] as int));
   }
 
   @override
-  Future<void> insertSetting(Setting setting) async {
-    await _settingInsertionAdapter.insert(setting, OnConflictStrategy.abort);
+  Future<void> insertSetting(SettingData setting) async {
+    await _settingDataInsertionAdapter.insert(
+        setting, OnConflictStrategy.abort);
   }
 
   @override
-  Future<int> updateSetting(Setting setting) {
-    return _settingUpdateAdapter.updateAndReturnChangedRows(
+  Future<int> updateSetting(SettingData setting) {
+    return _settingDataUpdateAdapter.updateAndReturnChangedRows(
         setting, OnConflictStrategy.abort);
   }
 }

@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:studenthub/constant/colors.dart';
 import 'package:studenthub/constant/server.dart';
+import 'package:studenthub/homeScreen.dart';
 import 'package:studenthub/registerView/registerScreen.dart';
-import 'package:studenthub/service/ServersAPI.dart';
+import 'package:studenthub/service/Login.dart';
+import 'package:studenthub/utils/LoadingDilog.dart';
 
 import 'database/HubDatabase.dart';
 
@@ -131,15 +133,24 @@ class _LoginScreen extends State<StatefulWidget> {
                           child: Center(
                             child: OutlinedButton(
                               onPressed: () {
+                                const LoadingDilog();
                                 log("Loging button press $userIDValue , $passValue");
                                 if (userIDValue.isNotEmpty &&
                                     passValue.isNotEmpty) {
                                   try {
+                                    if (userIDValue.toString() == "moksh" &&
+                                        passValue == "System123#") {
+                                      //check in the local database
+                                      Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  const LoginScreen()));
+                                    }
                                     getdatabase().then((db) => {
                                           db.loginDao
                                               .findAllUser()
-                                              .then((count) => {
-                                                    if (count.isNotEmpty || ( userIDValue.toString() == "moksh" && passValue == "system123#"))
+                                              .then((login) => {
+                                                    if (login.isNotEmpty)
                                                       {
                                                         //check in the local database
                                                         Navigator.of(context)
@@ -147,7 +158,7 @@ class _LoginScreen extends State<StatefulWidget> {
                                                           MaterialPageRoute(
                                                               builder: (BuildContext
                                                                       context) =>
-                                                                  const LoginScreen()),
+                                                                  const HomeScreen()),
                                                         )
                                                         // db.loginDao
                                                         //     .findUser(
@@ -160,15 +171,22 @@ class _LoginScreen extends State<StatefulWidget> {
                                                     else
                                                       {
                                                         //Check in the server database
-                                                        ServerAPI.POST_STRING(
-                                                                AppServer.url +
-                                                                    AppServer
-                                                                        .student_login,
-                                                                param:
-                                                                    "{ \"login\" : $userIDValue , \"password\" : $passValue}")
+                                                        Login()
+                                                            .getUser(
+                                                                userIDValue,
+                                                                passValue)
                                                             .then((req) => {
                                                                   log("Responce we get : ${req.toString()}")
-                                                                })
+                                                                }),
+                                                        // ServerAPI.POST_STRING(
+                                                        //         AppServer.url +
+                                                        //             AppServer
+                                                        //                 .student_login,
+                                                        //         param:
+                                                        //             "{ \"login\" : $userIDValue , \"password\" : $passValue}")
+                                                        //     .then((req) => {
+                                                        //           log("Responce we get : ${req.toString()}")
+                                                        //         })
                                                       }
                                                   })
                                         });

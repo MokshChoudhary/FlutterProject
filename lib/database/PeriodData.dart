@@ -2,11 +2,12 @@
 import 'package:floor/floor.dart';
 
 @entity
-class Period {
+class PeriodData {
   @primaryKey
   final String periodId;
   final String classId;
   final String timing;
 
-  Period({required this.periodId, required this.classId, required this.timing});
+  PeriodData(
+      {required this.periodId, required this.classId, required this.timing});
 }

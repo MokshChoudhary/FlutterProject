@@ -1,10 +1,10 @@
 import 'package:floor/floor.dart';
 
 @entity
-class Setting {
+class SettingData {
   @primaryKey
   final int id;
   final bool isOnline;
 
-  Setting(this.isOnline, this.id);
+  SettingData(this.isOnline, this.id);
 }

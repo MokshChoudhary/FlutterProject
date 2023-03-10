@@ -23,14 +23,13 @@ class ServerAPI {
     }
   }
 
-  static Future<Object> POST(String url,
-      {required Map<String, String>? param,
-      Map<String, String>? header}) async {
-    return await http.post(Uri(scheme: url), headers: header, body: param);
+  static Future<Object> POST(Uri url,
+      {required Map<String, String>? body, Map<String, String>? header}) async {
+    return await http.post(url, headers: header, body: body);
   }
 
-  static Future<Object> POST_STRING(String url,
-      {required String? param, Map<String, String>? header}) async {
-    return await http.post(Uri(scheme: url), headers: header, body: param);
+  static Future<Object> POST_STRING(Uri url,
+      {required String? body, Map<String, String>? header}) async {
+    return await http.post(url, headers: header, body: body);
   }
 }

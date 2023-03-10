@@ -3,7 +3,7 @@
 import 'package:floor/floor.dart';
 
 @entity
-class Login {
+class LoginData {
   final int loginBy;
   @primaryKey
   final String uniqueId;
@@ -11,7 +11,7 @@ class Login {
   final String userId;
   final String password;
 
-  Login(
+  LoginData(
       {required this.uniqueId,
       required this.loginBy,
       required this.userId,

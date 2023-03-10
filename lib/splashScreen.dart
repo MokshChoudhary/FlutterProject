@@ -4,16 +4,16 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:floor/floor.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:studenthub/LoginScreen.dart';
 import 'package:studenthub/constant/colors.dart';
 import 'package:studenthub/database/HubDatabase.dart';
 import 'package:studenthub/service/ServersAPI.dart';
 
-import 'database/Setting.dart';
+import 'database/SettingData.dart';
 import 'homeScreen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -81,17 +81,17 @@ class _SplashScreenState extends State<SplashScreen> {
             TextButton(
                 onPressed: () {
                   try {
-                    Future<List<Setting>> setting =
+                    Future<List<SettingData>> setting =
                         database.settingDao.getAllSettings();
                     setting.then((value) => {
                           if (value.isNotEmpty)
                             {
                               database.settingDao
-                                  .updateSetting(Setting(true, 0))
+                                  .updateSetting(SettingData(true, 0))
                             }
                         });
                   } catch (e) {
-                    log(" Message $e");
+                    log("Message $e");
                   }
                 },
                 child: const Text("Offline Mode")),
@@ -125,6 +125,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void loginCheck() async {
     final HubDatabase database =
         await $FloorHubDatabase.databaseBuilder('studentHub.db').build();
+    getDatabasesPath().then((v) => log("Datatabase path : $v"));
     database.loginDao.findAllUser().then((value) => {
           if (value.isNotEmpty)
             {

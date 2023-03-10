@@ -5,9 +5,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:studenthub/constant/server.dart';
-import 'package:studenthub/database/Student.dart';
 
 import '../constant/colors.dart';
+import '../database/StudentData.dart';
 import '../service/ServersAPI.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -296,7 +296,7 @@ class _RegisterScreen extends State<StatefulWidget> {
                             if (passwordValue != re_passwordValue) {
                               _showMyDialog("Password doesn't match!!");
                             } else {
-                              var student = Student(
+                              var student = StudentData(
                                   studentFirstName: studentFnameValue,
                                   studentLastName: studentLnameValue,
                                   dob: dobValue.millisecondsSinceEpoch,
@@ -325,9 +325,9 @@ class _RegisterScreen extends State<StatefulWidget> {
                               var header = <String, String>{};
                               header["Accept"] = "*/*";
                               ServerAPI.POST_STRING(
-                                  AppServer.url + AppServer.student_register,
+                                  AppServer.toUri(AppServer.student_register),
                                   header: header,
-                                  param: studentJson);
+                                  body: studentJson);
                             }
                           },
                           child: Row(
