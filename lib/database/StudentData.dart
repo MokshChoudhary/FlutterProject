@@ -3,7 +3,7 @@ import 'package:floor/floor.dart';
 
 import 'Class.dart';
 
-@entity
+@Entity(tableName: "Student")
 class StudentData {
   @primaryKey
   final String studentId;
@@ -30,50 +30,49 @@ class StudentData {
   final String gardiuanNumber;
   final String password;
 
-  factory StudentData.fromJSON(Map<String, dynamic> json) => StudentData(
-      studentId: json["student_id"],
-      studentFirstName: json["student_first_name"],
-      studentLastName: json["student_last_name"],
-      gender: json["gender"],
-      cgpa: json["cgpa"],
-      classId: json["class_id"],
-      dob: json["dob"],
-      aadharNumber: json["aadhar_number"],
-      address: json["address"],
-      subCast: json["sub_cast"],
-      religion: json["religion"],
-      marksObtain: json["marks_obtain"],
-      attendsObtain: json["attends_obtain"],
-      joinIn: json["join_in"],
-      fatherFirstName: json["father_first_name"],
-      fatherLastName: json["father_last_name"],
-      motherFirstName: json["mother_first_name"],
-      motherLastName: json["mother_last_name"],
-      gardiuanNumber: json["gardiuan_number"],
-      password: json["password"]);
+  static StudentData fromJSON(Map<String, dynamic> json) => StudentData(
+      json["student_id"],
+      json["student_first_name"],
+      json["student_last_name"],
+      json["gender"],
+      json["cgpa"],
+      json["class_id"],
+      json["dob"],
+      json["aadhar_number"],
+      json["address"],
+      json["sub_cast"],
+      json["religion"],
+      json["marks_obtain"],
+      json["attends_obtain"],
+      json["join_in"],
+      json["father_first_name"],
+      json["father_last_name"],
+      json["mother_first_name"],
+      json["mother_last_name"],
+      json["gardiuan_number"],
+      json["password"]);
 
-  StudentData({
-    required this.studentFirstName,
-    required this.studentLastName,
-    required this.dob,
-    required this.cgpa,
-    required this.aadharNumber,
-    required this.address,
-    required this.marksObtain,
-    required this.attendsObtain,
-    required this.joinIn,
-    required this.fatherFirstName,
-    required this.fatherLastName,
-    required this.motherFirstName,
-    required this.motherLastName,
-    required this.gardiuanNumber,
-    required this.classId,
-    required this.gender,
-    required this.subCast,
-    required this.religion,
-    required this.studentId,
-    required this.password,
-  });
+  StudentData(
+      this.studentId,
+      this.studentFirstName,
+      this.studentLastName,
+      this.gender,
+      this.cgpa,
+      this.classId,
+      this.dob,
+      this.aadharNumber,
+      this.address,
+      this.subCast,
+      this.religion,
+      this.marksObtain,
+      this.attendsObtain,
+      this.joinIn,
+      this.fatherFirstName,
+      this.fatherLastName,
+      this.motherFirstName,
+      this.motherLastName,
+      this.gardiuanNumber,
+      this.password);
 
   // StudentData(
   //   this.studentFirstName,

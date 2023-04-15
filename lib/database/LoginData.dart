@@ -2,14 +2,21 @@
 
 import 'package:floor/floor.dart';
 
-@entity
+enum LoginType {
+  student,
+  teacher,
+  admin,
+  developer,
+}
+
+@Entity(tableName: "Login")
 class LoginData {
-  final int loginBy;
+  final int? loginBy;
   @primaryKey
-  final String uniqueId;
+  final String? uniqueId;
   @primaryKey
-  final String userId;
-  final String password;
+  final String? userId;
+  final String? password;
 
   LoginData(
       {required this.uniqueId,

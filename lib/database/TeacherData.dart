@@ -2,7 +2,7 @@
 
 import 'package:floor/floor.dart';
 
-@entity
+@Entity(tableName: "Teacher")
 class TeacherData {
   @primaryKey
   final String teacherId;
@@ -14,6 +14,5 @@ class TeacherData {
   final String periodId;
 
   TeacherData(this.teacherName, this.dob, this.address, this.exprience,
-      this.dateOfJoing, this.periodId,
-      {required this.teacherId});
+      this.dateOfJoing, this.periodId, this.teacherId);
 }

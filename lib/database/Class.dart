@@ -2,7 +2,7 @@
 
 import 'package:floor/floor.dart';
 
-@entity
+@Entity(tableName: "Class")
 class Class {
   @primaryKey
   final String classId;

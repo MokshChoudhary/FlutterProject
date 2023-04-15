@@ -126,38 +126,14 @@ class _SplashScreenState extends State<SplashScreen> {
     final HubDatabase database =
         await $FloorHubDatabase.databaseBuilder('studentHub.db').build();
     getDatabasesPath().then((v) => log("Datatabase path : $v"));
-    database.loginDao.findAllUser().then((value) => {
-          if (value.isNotEmpty)
-            {
-              if (value.isNotEmpty)
-                Timer(
-                  const Duration(seconds: 3),
-                  () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => const HomeScreen(),
-                    ),
-                  ),
-                )
-              else
-                Timer(
-                  const Duration(seconds: 3),
-                  () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => LoginScreen(),
-                    ),
-                  ),
-                )
-            }
-          else
-            Timer(
-              const Duration(seconds: 3),
-              () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (BuildContext context) => LoginScreen(),
-                ),
-              ),
-            )
-        });
+    Timer(
+      const Duration(seconds: 3),
+      () => Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (BuildContext context) => const LoginScreen(),
+        ),
+      ),
+    );
   }
 
   @override

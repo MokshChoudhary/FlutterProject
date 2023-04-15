@@ -297,28 +297,26 @@ class _RegisterScreen extends State<StatefulWidget> {
                               _showMyDialog("Password doesn't match!!");
                             } else {
                               var student = StudentData(
-                                  studentFirstName: studentFnameValue,
-                                  studentLastName: studentLnameValue,
-                                  dob: dobValue.millisecondsSinceEpoch,
-                                  cgpa: 0,
-                                  aadharNumber: int.parse(aadharNumberValue),
-                                  address: addressValue,
-                                  marksObtain: 0,
-                                  attendsObtain: 0,
-                                  joinIn: DateTime.now().millisecondsSinceEpoch,
-                                  fatherFirstName:
-                                      fatherNameValue.split(" ")[0],
-                                  fatherLastName: fatherNameValue.split(" ")[1],
-                                  motherFirstName:
-                                      motherNameValue.split(" ")[0],
-                                  motherLastName: motherNameValue.split(" ")[1],
-                                  gardiuanNumber: gardiuanNumberValue,
-                                  classId: "",
-                                  gender: genderDropdownValue,
-                                  subCast: subCastDropDownValue,
-                                  religion: religionDropDownValue,
-                                  studentId: "studentId",
-                                  password: passwordValue);
+                                  "${dobValue.toString()}_${DateTime.now().millisecondsSinceEpoch}_SchoolName",
+                                  studentFnameValue,
+                                  studentLnameValue,
+                                  genderDropdownValue,
+                                  0,
+                                  "",
+                                  dobValue.millisecondsSinceEpoch,
+                                  int.parse(aadharNumberValue),
+                                  addressValue,
+                                  subCastDropDownValue,
+                                  religionDropDownValue,
+                                  0,
+                                  0,
+                                  DateTime.now().millisecondsSinceEpoch,
+                                  fatherNameValue.split(" ")[0],
+                                  fatherNameValue.split(" ")[1],
+                                  motherNameValue.split(" ")[0],
+                                  motherNameValue.split(" ")[1],
+                                  gardiuanNumberValue,
+                                  passwordValue);
 
                               var studentJson = jsonEncode(student);
                               log(studentJson);

@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:studenthub/constant/colors.dart';
+import 'package:studenthub/database/LoginData.dart';
 import 'package:studenthub/database/StudentData.dart';
 import 'package:studenthub/homeScreen.dart';
 import 'package:studenthub/registerView/registerScreen.dart';
@@ -174,13 +175,60 @@ class _LoginScreen extends State<StatefulWidget> {
                                                             .getUser(
                                                                 userIDValue,
                                                                 passValue)
-                                                            .then((req) => {
-                                                                  log("Responce we get : ${(req as StudentData).toString()}"),
-                                                                  db.studentDao
-                                                                      .insertStudent(
-                                                                          req),
-                                                                  const HomeScreen()
-                                                                }),
+                                                            .then((req) {
+                                                          req as StudentData;
+                                                          StudentData studentData = StudentData(
+                                                              req.studentId,
+                                                              req.studentFirstName,
+                                                              req.studentLastName,
+                                                              req.gender,
+                                                              req.cgpa,
+                                                              req.classId,
+                                                              req.dob,
+                                                              req.aadharNumber,
+                                                              req.address,
+                                                              req.subCast,
+                                                              req.religion,
+                                                              req.marksObtain,
+                                                              req.attendsObtain,
+                                                              req.joinIn,
+                                                              req.fatherFirstName,
+                                                              req.fatherLastName,
+                                                              req.motherFirstName,
+                                                              req.motherLastName,
+                                                              req.gardiuanNumber,
+                                                              req.password);
+                                                          var loginData = LoginData(
+                                                              uniqueId:
+                                                                  studentData
+                                                                      .studentId,
+                                                              loginBy: LoginType
+                                                                  .student
+                                                                  .index,
+                                                              userId: studentData
+                                                                  .studentId,
+                                                              password:
+                                                                  studentData
+                                                                      .password);
+                                                          log("Responce we get : $studentData");
+                                                          log("Responce we get : $loginData");
+                                                          db.studentDao
+                                                              .insertStudent(
+                                                                  studentData)
+                                                              .then((value) => db
+                                                                  .loginDao
+                                                                  .insertUser(
+                                                                      loginData)
+                                                                  .then((value) =>
+                                                                      Navigator.of(
+                                                                              context)
+                                                                          .pushReplacement(
+                                                                        MaterialPageRoute(
+                                                                          builder: (BuildContext context) =>
+                                                                              const HomeScreen(),
+                                                                        ),
+                                                                      )));
+                                                        }),
                                                         // ServerAPI.POST_STRING(
                                                         //         AppServer.url +
                                                         //             AppServer

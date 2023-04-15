@@ -1,6 +1,6 @@
 import 'package:floor/floor.dart';
 
-@entity
+@Entity(tableName: "Setting")
 class SettingData {
   @primaryKey
   final int id;

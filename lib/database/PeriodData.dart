@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 import 'package:floor/floor.dart';
 
-@entity
+@Entity(tableName: "Period")
 class PeriodData {
   @primaryKey
   final String periodId;

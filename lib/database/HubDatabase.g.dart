@@ -91,13 +91,13 @@ class _$HubDatabase extends HubDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `LoginData` (`loginBy` INTEGER NOT NULL, `uniqueId` TEXT NOT NULL, `userId` TEXT NOT NULL, `password` TEXT NOT NULL, PRIMARY KEY (`uniqueId`))');
+            'CREATE TABLE IF NOT EXISTS `Login` (`loginBy` INTEGER, `uniqueId` TEXT, `userId` TEXT, `password` TEXT, PRIMARY KEY (`uniqueId`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `TeacherData` (`teacherId` TEXT NOT NULL, `teacherName` TEXT NOT NULL, `dob` INTEGER NOT NULL, `address` TEXT NOT NULL, `exprience` TEXT NOT NULL, `dateOfJoing` TEXT NOT NULL, `periodId` TEXT NOT NULL, PRIMARY KEY (`teacherId`))');
+            'CREATE TABLE IF NOT EXISTS `Teacher` (`teacherId` TEXT NOT NULL, `teacherName` TEXT NOT NULL, `dob` INTEGER NOT NULL, `address` TEXT NOT NULL, `exprience` TEXT NOT NULL, `dateOfJoing` TEXT NOT NULL, `periodId` TEXT NOT NULL, PRIMARY KEY (`teacherId`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `StudentData` (`studentId` TEXT NOT NULL, `studentFirstName` TEXT NOT NULL, `studentLastName` TEXT NOT NULL, `gender` TEXT NOT NULL, `cgpa` INTEGER NOT NULL, `classId` TEXT NOT NULL, `dob` INTEGER NOT NULL, `aadharNumber` INTEGER NOT NULL, `address` TEXT NOT NULL, `subCast` TEXT NOT NULL, `religion` TEXT NOT NULL, `marksObtain` INTEGER NOT NULL, `attendsObtain` INTEGER NOT NULL, `joinIn` INTEGER NOT NULL, `fatherFirstName` TEXT NOT NULL, `fatherLastName` TEXT NOT NULL, `motherFirstName` TEXT NOT NULL, `motherLastName` TEXT NOT NULL, `gardiuanNumber` TEXT NOT NULL, `password` TEXT NOT NULL, PRIMARY KEY (`studentId`))');
+            'CREATE TABLE IF NOT EXISTS `Student` (`studentId` TEXT NOT NULL, `studentFirstName` TEXT NOT NULL, `studentLastName` TEXT NOT NULL, `gender` TEXT NOT NULL, `cgpa` INTEGER NOT NULL, `classId` TEXT NOT NULL, `dob` INTEGER NOT NULL, `aadharNumber` INTEGER NOT NULL, `address` TEXT NOT NULL, `subCast` TEXT NOT NULL, `religion` TEXT NOT NULL, `marksObtain` INTEGER NOT NULL, `attendsObtain` INTEGER NOT NULL, `joinIn` INTEGER NOT NULL, `fatherFirstName` TEXT NOT NULL, `fatherLastName` TEXT NOT NULL, `motherFirstName` TEXT NOT NULL, `motherLastName` TEXT NOT NULL, `gardiuanNumber` TEXT NOT NULL, `password` TEXT NOT NULL, PRIMARY KEY (`studentId`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `SettingData` (`id` INTEGER NOT NULL, `isOnline` INTEGER NOT NULL, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `Setting` (`id` INTEGER NOT NULL, `isOnline` INTEGER NOT NULL, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -133,7 +133,7 @@ class _$StudentDao extends StudentDao {
   )   : _queryAdapter = QueryAdapter(database),
         _studentDataInsertionAdapter = InsertionAdapter(
             database,
-            'StudentData',
+            'Student',
             (StudentData item) => <String, Object?>{
                   'studentId': item.studentId,
                   'studentFirstName': item.studentFirstName,
@@ -169,52 +169,53 @@ class _$StudentDao extends StudentDao {
   Future<List<StudentData>> findAllStudent() async {
     return _queryAdapter.queryList('Select * from Student',
         mapper: (Map<String, Object?> row) => StudentData(
-            studentFirstName: row['studentFirstName'] as String,
-            studentLastName: row['studentLastName'] as String,
-            dob: row['dob'] as int,
-            cgpa: row['cgpa'] as int,
-            aadharNumber: row['aadharNumber'] as int,
-            address: row['address'] as String,
-            marksObtain: row['marksObtain'] as int,
-            attendsObtain: row['attendsObtain'] as int,
-            joinIn: row['joinIn'] as int,
-            fatherFirstName: row['fatherFirstName'] as String,
-            fatherLastName: row['fatherLastName'] as String,
-            motherFirstName: row['motherFirstName'] as String,
-            motherLastName: row['motherLastName'] as String,
-            gardiuanNumber: row['gardiuanNumber'] as String,
-            classId: row['classId'] as String,
-            gender: row['gender'] as String,
-            subCast: row['subCast'] as String,
-            religion: row['religion'] as String,
-            studentId: row['studentId'] as String,
-            password: row['password'] as String));
+            row['studentId'] as String,
+            row['studentFirstName'] as String,
+            row['studentLastName'] as String,
+            row['gender'] as String,
+            row['cgpa'] as int,
+            row['classId'] as String,
+            row['dob'] as int,
+            row['aadharNumber'] as int,
+            row['address'] as String,
+            row['subCast'] as String,
+            row['religion'] as String,
+            row['marksObtain'] as int,
+            row['attendsObtain'] as int,
+            row['joinIn'] as int,
+            row['fatherFirstName'] as String,
+            row['fatherLastName'] as String,
+            row['motherFirstName'] as String,
+            row['motherLastName'] as String,
+            row['gardiuanNumber'] as String,
+            row['password'] as String));
   }
 
   @override
   Future<StudentData?> findStudentById(String id) async {
     return _queryAdapter.query('Select * from Student Where studentId = ?1',
         mapper: (Map<String, Object?> row) => StudentData(
-            studentFirstName: row['studentFirstName'] as String,
-            studentLastName: row['studentLastName'] as String,
-            dob: row['dob'] as int,
-            cgpa: row['cgpa'] as int,
-            aadharNumber: row['aadharNumber'] as int,
-            address: row['address'] as String,
-            marksObtain: row['marksObtain'] as int,
-            attendsObtain: row['attendsObtain'] as int,
-            joinIn: row['joinIn'] as int,
-            fatherFirstName: row['fatherFirstName'] as String,
-            fatherLastName: row['fatherLastName'] as String,
-            motherFirstName: row['motherFirstName'] as String,
-            motherLastName: row['motherLastName'] as String,
-            gardiuanNumber: row['gardiuanNumber'] as String,
-            classId: row['classId'] as String,
-            gender: row['gender'] as String,
-            subCast: row['subCast'] as String,
-            religion: row['religion'] as String,
-            studentId: row['studentId'] as String,
-            password: row['password'] as String));
+            row['studentId'] as String,
+            row['studentFirstName'] as String,
+            row['studentLastName'] as String,
+            row['gender'] as String,
+            row['cgpa'] as int,
+            row['classId'] as String,
+            row['dob'] as int,
+            row['aadharNumber'] as int,
+            row['address'] as String,
+            row['subCast'] as String,
+            row['religion'] as String,
+            row['marksObtain'] as int,
+            row['attendsObtain'] as int,
+            row['joinIn'] as int,
+            row['fatherFirstName'] as String,
+            row['fatherLastName'] as String,
+            row['motherFirstName'] as String,
+            row['motherLastName'] as String,
+            row['gardiuanNumber'] as String,
+            row['password'] as String),
+        arguments: [id]);
   }
 
   @override
@@ -231,7 +232,7 @@ class _$TeacherDao extends TeacherDao {
   )   : _queryAdapter = QueryAdapter(database),
         _teacherDataInsertionAdapter = InsertionAdapter(
             database,
-            'TeacherData',
+            'Teacher',
             (TeacherData item) => <String, Object?>{
                   'teacherId': item.teacherId,
                   'teacherName': item.teacherName,
@@ -260,7 +261,7 @@ class _$TeacherDao extends TeacherDao {
             row['exprience'] as String,
             row['dateOfJoing'] as String,
             row['periodId'] as String,
-            teacherId: row['teacherId'] as String));
+            row['teacherId'] as String));
   }
 
   @override
@@ -273,7 +274,7 @@ class _$TeacherDao extends TeacherDao {
             row['exprience'] as String,
             row['dateOfJoing'] as String,
             row['periodId'] as String,
-            teacherId: row['teacherId'] as String),
+            row['teacherId'] as String),
         arguments: [id]);
   }
 
@@ -291,7 +292,7 @@ class _$LoginDao extends LoginDao {
   )   : _queryAdapter = QueryAdapter(database),
         _loginDataInsertionAdapter = InsertionAdapter(
             database,
-            'LoginData',
+            'Login',
             (LoginData item) => <String, Object?>{
                   'loginBy': item.loginBy,
                   'uniqueId': item.uniqueId,
@@ -311,10 +312,10 @@ class _$LoginDao extends LoginDao {
   Future<List<LoginData?>> findAllUser() async {
     return _queryAdapter.queryList('Select * from Student;',
         mapper: (Map<String, Object?> row) => LoginData(
-            uniqueId: row['uniqueId'] as String,
-            loginBy: row['loginBy'] as int,
-            userId: row['userId'] as String,
-            password: row['password'] as String));
+            uniqueId: row['uniqueId'] as String?,
+            loginBy: row['loginBy'] as int?,
+            userId: row['userId'] as String?,
+            password: row['password'] as String?));
   }
 
   @override
@@ -330,10 +331,10 @@ class _$LoginDao extends LoginDao {
     return _queryAdapter.queryList(
         'SELECT * FROM Student WHERE userId = ?1 AND password = ?2;',
         mapper: (Map<String, Object?> row) => LoginData(
-            uniqueId: row['uniqueId'] as String,
-            loginBy: row['loginBy'] as int,
-            userId: row['userId'] as String,
-            password: row['password'] as String),
+            uniqueId: row['uniqueId'] as String?,
+            loginBy: row['loginBy'] as int?,
+            userId: row['userId'] as String?,
+            password: row['password'] as String?),
         arguments: [userId, password]);
   }
 
@@ -351,14 +352,14 @@ class _$SettingDao extends SettingDao {
   )   : _queryAdapter = QueryAdapter(database),
         _settingDataInsertionAdapter = InsertionAdapter(
             database,
-            'SettingData',
+            'Setting',
             (SettingData item) => <String, Object?>{
                   'id': item.id,
                   'isOnline': item.isOnline ? 1 : 0
                 }),
         _settingDataUpdateAdapter = UpdateAdapter(
             database,
-            'SettingData',
+            'Setting',
             ['id'],
             (SettingData item) => <String, Object?>{
                   'id': item.id,
