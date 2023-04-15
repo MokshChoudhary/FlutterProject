@@ -3,9 +3,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:studenthub/constant/colors.dart';
-import 'package:studenthub/constant/server.dart';
+import 'package:studenthub/database/StudentData.dart';
 import 'package:studenthub/homeScreen.dart';
 import 'package:studenthub/registerView/registerScreen.dart';
 import 'package:studenthub/service/Login.dart';
@@ -32,7 +31,7 @@ class _LoginScreen extends State<StatefulWidget> {
 
   showSnackBar(String msg) {
     scaffoldCurrent.currentState?.showSnackBar(SnackBar(
-      content: Text(msg.isEmpty ? 'Pleas enter the UserId & Password' : msg),
+      content: Text(msg.isEmpty ? 'Please Enter the UserId & Password' : msg),
     ));
   }
 
@@ -176,7 +175,11 @@ class _LoginScreen extends State<StatefulWidget> {
                                                                 userIDValue,
                                                                 passValue)
                                                             .then((req) => {
-                                                                  log("Responce we get : ${req.toString()}")
+                                                                  log("Responce we get : ${(req as StudentData).toString()}"),
+                                                                  db.studentDao
+                                                                      .insertStudent(
+                                                                          req),
+                                                                  const HomeScreen()
                                                                 }),
                                                         // ServerAPI.POST_STRING(
                                                         //         AppServer.url +

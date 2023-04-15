@@ -21,9 +21,8 @@ class Login {
             header: header, body: body)
         .then((value) {
       log("[/student_login] response : ${(value as http.Response).body}");
-      var encodedString = jsonEncode(value.body);
 
-      student = StudentData.fromJSON(json.decode(encodedString));
+      student = StudentData.fromJSON(json.decode(value.body));
     }).onError((error, stackTrace) {
       log("[/student_login] response : $error, $stackTrace");
     });

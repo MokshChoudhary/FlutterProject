@@ -95,7 +95,7 @@ class _$HubDatabase extends HubDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `TeacherData` (`teacherId` TEXT NOT NULL, `teacherName` TEXT NOT NULL, `dob` INTEGER NOT NULL, `address` TEXT NOT NULL, `exprience` TEXT NOT NULL, `dateOfJoing` TEXT NOT NULL, `periodId` TEXT NOT NULL, PRIMARY KEY (`teacherId`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `StudentData` (`studentId` TEXT NOT NULL, `studentFirstName` TEXT NOT NULL, `studentLastName` TEXT NOT NULL, `gender` TEXT NOT NULL, `cgpa` INTEGER NOT NULL, `classId` TEXT NOT NULL, `dob` INTEGER NOT NULL, `aadharNumber` INTEGER NOT NULL, `address` TEXT NOT NULL, `subCast` TEXT NOT NULL, `religion` TEXT NOT NULL, `marksObtain` REAL NOT NULL, `attendsObtain` INTEGER NOT NULL, `joinIn` INTEGER NOT NULL, `fatherFirstName` TEXT NOT NULL, `fatherLastName` TEXT NOT NULL, `motherFirstName` TEXT NOT NULL, `motherLastName` TEXT NOT NULL, `gardiuanNumber` TEXT NOT NULL, `password` TEXT NOT NULL, PRIMARY KEY (`studentId`))');
+            'CREATE TABLE IF NOT EXISTS `StudentData` (`studentId` TEXT NOT NULL, `studentFirstName` TEXT NOT NULL, `studentLastName` TEXT NOT NULL, `gender` TEXT NOT NULL, `cgpa` INTEGER NOT NULL, `classId` TEXT NOT NULL, `dob` INTEGER NOT NULL, `aadharNumber` INTEGER NOT NULL, `address` TEXT NOT NULL, `subCast` TEXT NOT NULL, `religion` TEXT NOT NULL, `marksObtain` INTEGER NOT NULL, `attendsObtain` INTEGER NOT NULL, `joinIn` INTEGER NOT NULL, `fatherFirstName` TEXT NOT NULL, `fatherLastName` TEXT NOT NULL, `motherFirstName` TEXT NOT NULL, `motherLastName` TEXT NOT NULL, `gardiuanNumber` TEXT NOT NULL, `password` TEXT NOT NULL, PRIMARY KEY (`studentId`))');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `SettingData` (`id` INTEGER NOT NULL, `isOnline` INTEGER NOT NULL, PRIMARY KEY (`id`))');
 
@@ -175,7 +175,7 @@ class _$StudentDao extends StudentDao {
             cgpa: row['cgpa'] as int,
             aadharNumber: row['aadharNumber'] as int,
             address: row['address'] as String,
-            marksObtain: row['marksObtain'] as double,
+            marksObtain: row['marksObtain'] as int,
             attendsObtain: row['attendsObtain'] as int,
             joinIn: row['joinIn'] as int,
             fatherFirstName: row['fatherFirstName'] as String,
@@ -201,7 +201,7 @@ class _$StudentDao extends StudentDao {
             cgpa: row['cgpa'] as int,
             aadharNumber: row['aadharNumber'] as int,
             address: row['address'] as String,
-            marksObtain: row['marksObtain'] as double,
+            marksObtain: row['marksObtain'] as int,
             attendsObtain: row['attendsObtain'] as int,
             joinIn: row['joinIn'] as int,
             fatherFirstName: row['fatherFirstName'] as String,

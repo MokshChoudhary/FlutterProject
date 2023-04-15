@@ -61,6 +61,7 @@ android {
         }
     }
     buildToolsVersion '33.0.0'
+    namespace 'com.example.my_app'
 }
 
 flutter {

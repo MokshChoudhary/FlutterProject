@@ -20,7 +20,7 @@ class StudentData {
   final String address;
   final String subCast;
   final String religion;
-  final double marksObtain;
+  final int marksObtain;
   final int attendsObtain;
   final int joinIn;
   final String fatherFirstName;
