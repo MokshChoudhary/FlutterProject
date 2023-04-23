@@ -5,6 +5,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:studenthub/constant/server.dart';
+import 'package:studenthub/utils/Securty.dart';
 
 import '../constant/colors.dart';
 import '../database/StudentData.dart';
@@ -316,8 +317,7 @@ class _RegisterScreen extends State<StatefulWidget> {
                                   motherNameValue.split(" ")[0],
                                   motherNameValue.split(" ")[1],
                                   gardiuanNumberValue,
-                                  passwordValue);
-
+                                  Securty().encrypt(passwordValue).toString());
                               var studentJson = jsonEncode(student);
                               log(studentJson);
                               var header = <String, String>{};

@@ -6,6 +6,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 class LoadingDilog extends StatelessWidget {
   const LoadingDilog({Key? key}) : super(key: key);
 
+  static void loadLoadingDilog(BuildContext context) {}
+
   static const kits = <Widget>[
     SpinKitRotatingCircle(color: Colors.white),
     SpinKitRotatingPlain(color: Colors.white),

@@ -10,6 +10,7 @@ import 'package:studenthub/homeScreen.dart';
 import 'package:studenthub/registerView/registerScreen.dart';
 import 'package:studenthub/service/Login.dart';
 import 'package:studenthub/utils/LoadingDilog.dart';
+import 'package:studenthub/utils/Securty.dart';
 
 import 'database/HubDatabase.dart';
 
@@ -175,12 +176,24 @@ class _LoginScreen extends State<StatefulWidget> {
                                                             .getUser(
                                                                 userIDValue,
                                                                 passValue)
-                                                            .then((req) {
-                                                          req as StudentData;
+                                                            .then((req) async {
+                                                          if (req == null) {
+                                                            log("Login request ${req.toString()}");
+                                                            return;
+                                                          }
+                                                          if (req
+                                                              is StudentData) {
+                                                            req;
+                                                          } else {
+                                                            //@TODO: Password is encorrect
+                                                            return;
+                                                          }
                                                           StudentData studentData = StudentData(
                                                               req.studentId,
-                                                              req.studentFirstName,
-                                                              req.studentLastName,
+                                                              req
+                                                                  .studentFirstName,
+                                                              req
+                                                                  .studentLastName,
                                                               req.gender,
                                                               req.cgpa,
                                                               req.classId,
@@ -192,12 +205,18 @@ class _LoginScreen extends State<StatefulWidget> {
                                                               req.marksObtain,
                                                               req.attendsObtain,
                                                               req.joinIn,
-                                                              req.fatherFirstName,
-                                                              req.fatherLastName,
-                                                              req.motherFirstName,
-                                                              req.motherLastName,
-                                                              req.gardiuanNumber,
-                                                              req.password);
+                                                              req
+                                                                  .fatherFirstName,
+                                                              req
+                                                                  .fatherLastName,
+                                                              req
+                                                                  .motherFirstName,
+                                                              req
+                                                                  .motherLastName,
+                                                              req
+                                                                  .gardiuanNumber,
+                                                              Securty().encrypt(
+                                                                  req.password));
                                                           var loginData = LoginData(
                                                               uniqueId:
                                                                   studentData
@@ -207,9 +226,10 @@ class _LoginScreen extends State<StatefulWidget> {
                                                                   .index,
                                                               userId: studentData
                                                                   .studentId,
-                                                              password:
-                                                                  studentData
-                                                                      .password);
+                                                              password: Securty()
+                                                                  .encrypt(
+                                                                      studentData
+                                                                          .password));
                                                           log("Responce we get : $studentData");
                                                           log("Responce we get : $loginData");
                                                           db.studentDao
