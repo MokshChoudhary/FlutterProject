@@ -8,6 +8,7 @@ class AppServer {
   static const version = "version";
   static const student_register = "student_register";
   static const student_login = "student_login";
+  static const class_meta_data = "student_login";
 
   static Uri toUri(String path) {
     return Uri(scheme: scheme, host: host, port: port, path: path);

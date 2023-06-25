@@ -7,7 +7,7 @@ abstract class LoginDao {
   @Query('Select * from Student;')
   Future<List<LoginData?>> findAllUser();
 
-  @Query("Select COUNT(*) from Student;")
+  @Query("Select COUNT(*) AS TOTAL from Student;")
   Future<int?> getCount();
 
   @Query(

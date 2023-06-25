@@ -35,6 +35,7 @@ class _RegisterScreen extends State<StatefulWidget> {
   String passwordValue = "";
   List<String> genderList = ["Gender", "Male", "Female", "Other"];
   String genderDropdownValue = "Gender";
+  late List<String> classId;
   List<String> religionList = [
     "Religion",
     "Hindi",
@@ -48,6 +49,13 @@ class _RegisterScreen extends State<StatefulWidget> {
 
   List<String> subList = ["SubCast", "Genral", "OBC", "SC", "ST"];
   String subCastDropDownValue = "SubCast";
+
+  void getMetaDataFromServer() async {
+    var header = <String, String>{};
+    header["Accept"] = "*/*";
+    ServerAPI.POST_STRING(AppServer.toUri(AppServer.class_meta_data),
+        header: header, body: "{'classId':''}");
+  }
 
   Future<void> _showMyDialog(String msg) async {
     return showDialog<void>(
@@ -328,8 +336,8 @@ class _RegisterScreen extends State<StatefulWidget> {
                                   body: studentJson);
                             }
                           },
-                          child: Row(
-                            children: const [Text("Submit"), Icon(Icons.check)],
+                          child: const Row(
+                            children: [Text("Submit"), Icon(Icons.check)],
                           ),
                         ),
                       ),
@@ -337,8 +345,8 @@ class _RegisterScreen extends State<StatefulWidget> {
                         alignment: Alignment.centerRight,
                         child: OutlinedButton(
                           onPressed: () => {},
-                          child: Row(
-                            children: const [
+                          child: const Row(
+                            children: [
                               Text("Submit & Next"),
                               Icon(Icons.check)
                             ],
