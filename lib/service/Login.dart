@@ -8,6 +8,8 @@ import 'package:studenthub/database/StudentData.dart';
 import 'package:studenthub/service/ServersAPI.dart';
 import 'package:studenthub/constant/server.dart';
 
+import '../utils/Securty.dart';
+
 class Login {
   Future<Object?> getUser(String userName, String password) async {
     Map<String, String> param = {};
@@ -25,7 +27,8 @@ class Login {
         switch ((value as http.Response).statusCode) {
           case HttpStatus.ok:
             log("[/student_login] response : ${value.body} & status Code : ${value.statusCode}");
-            dataToReturn = StudentData.fromJSON(json.decode(value.body));
+            dataToReturn = StudentData.fromJSON(
+                json.decode(Securty().dencrypt(value.body)));
             break;
           case HttpStatus.unauthorized:
             log("[/student_login] response : ${value.body} & status Code : ${value.statusCode}");

@@ -11,7 +11,7 @@ abstract class LoginDao {
   Future<int?> getCount();
 
   @Query(
-      'SELECT * FROM Student WHERE userId = :userId AND password = :password;')
+      'SELECT * FROM Student WHERE studentId = :userId AND password = :password;')
   Future<List<LoginData?>> findUser(String userId, String password);
 
   @insert

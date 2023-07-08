@@ -38,6 +38,32 @@ class MainAppDrawer extends State<StatefulWidget> {
     );
   }
 
+  Widget logout() {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Column(
+        children: <Widget>[
+          GestureDetector(
+            onTap: () => onTapNavMenu(),
+            child: const Align(
+              alignment: Alignment.centerLeft,
+              child: Column(
+                children: [
+                  Text(
+                    "Logout",
+                    style: TextStyle(
+                      fontSize: 18.0,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -97,6 +123,7 @@ class MainAppDrawer extends State<StatefulWidget> {
               ),
             ),
           ),
+          logout()
         ],
       ),
     );

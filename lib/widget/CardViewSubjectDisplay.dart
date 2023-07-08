@@ -75,10 +75,10 @@ class _CardViewSubjectDisplay extends State<CardViewSubjectDisplay> {
       child: Card(
         child: Column(
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Row(
-                children: const <Widget>[
+                children: <Widget>[
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text("Subject Name"),

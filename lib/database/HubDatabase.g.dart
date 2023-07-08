@@ -320,7 +320,8 @@ class _$LoginDao extends LoginDao {
 
   @override
   Future<int?> getCount() async {
-    await _queryAdapter.queryNoReturn('Select COUNT(*) from Student;');
+    return _queryAdapter.query('Select COUNT(*) AS TOTAL from Student;',
+        mapper: (Map<String, Object?> row) => row.values.first as int);
   }
 
   @override
@@ -329,7 +330,7 @@ class _$LoginDao extends LoginDao {
     String password,
   ) async {
     return _queryAdapter.queryList(
-        'SELECT * FROM Student WHERE userId = ?1 AND password = ?2;',
+        'SELECT * FROM Student WHERE studentId = ?1 AND password = ?2;',
         mapper: (Map<String, Object?> row) => LoginData(
             uniqueId: row['uniqueId'] as String?,
             loginBy: row['loginBy'] as int?,

@@ -141,7 +141,6 @@ class _LoginScreen extends State<StatefulWidget> {
                                   try {
                                     if (userIDValue.toString() == "moksh" &&
                                         passValue == "System123#") {
-                                      //check in the local database
                                       Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                               builder: (BuildContext context) =>
@@ -149,7 +148,11 @@ class _LoginScreen extends State<StatefulWidget> {
                                     }
                                     getdatabase().then((db) => {
                                           db.loginDao
-                                              .findAllUser()
+                                              .findUser(
+                                                  userIDValue.toString().trim(),
+                                                  Securty().encrypt(passValue
+                                                      .toString()
+                                                      .trim()))
                                               .then((login) => {
                                                     if (login.isNotEmpty)
                                                       {
@@ -185,7 +188,8 @@ class _LoginScreen extends State<StatefulWidget> {
                                                               is StudentData) {
                                                             req;
                                                           } else {
-                                                            //@TODO: Password is encorrect
+                                                            showSnackBar(
+                                                                "Wrong UserID or Password!!");
                                                             return;
                                                           }
                                                           StudentData studentData = StudentData(
@@ -249,15 +253,6 @@ class _LoginScreen extends State<StatefulWidget> {
                                                                         ),
                                                                       )));
                                                         }),
-                                                        // ServerAPI.POST_STRING(
-                                                        //         AppServer.url +
-                                                        //             AppServer
-                                                        //                 .student_login,
-                                                        //         param:
-                                                        //             "{ \"login\" : $userIDValue , \"password\" : $passValue}")
-                                                        //     .then((req) => {
-                                                        //           log("Responce we get : ${req.toString()}")
-                                                        //         })
                                                       }
                                                   })
                                         });
