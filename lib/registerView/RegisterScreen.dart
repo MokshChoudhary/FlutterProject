@@ -5,11 +5,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:studenthub/constant/server.dart';
-import 'package:studenthub/utils/Securty.dart';
 
 import '../constant/colors.dart';
+import '../database/FormFieldModel.dart';
 import '../database/StudentData.dart';
 import '../service/ServersAPI.dart';
+import '../utils/Securty.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -53,7 +54,7 @@ class _RegisterScreen extends State<StatefulWidget> {
   void getMetaDataFromServer() async {
     var header = <String, String>{};
     header["Accept"] = "*/*";
-    ServerAPI.POST_STRING(AppServer.toUri(AppServer.class_meta_data),
+    ServerAPI().POST_STRING(AppServer.toUri(AppServer.class_meta_data),
         header: header, body: "{'classId':''}");
   }
 
@@ -84,277 +85,63 @@ class _RegisterScreen extends State<StatefulWidget> {
     );
   }
 
+  List<FormFieldModel> formFields = [];
+  void _submitForm() {
+    // Implement your form submission logic here
+    // For example, you can print the values to the console
+    for (var field in formFields) {
+      print('Field: ${field.label}, Value: ${field.value}');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: true,
-      home: MaterialApp(
-        debugShowCheckedModeBanner: true,
-        theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
-        darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
-        home: Scaffold(
-          body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView(
-              children: [
-                Stack(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        alignment: Alignment.centerLeft,
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: const Icon(Icons.arrow_back),
-                        ),
+      theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+      darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
+      home: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: formFields.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: TextFormField(
+                        decoration:
+                            InputDecoration(labelText: formFields[index].label),
+                        onChanged: (value) {
+                          setState(() {
+                            formFields[index] =
+                                FormFieldModel(formFields[index].label, value);
+                          });
+                        },
+                        initialValue: formFields[index].value,
                       ),
-                    ),
-                    const Center(
-                      child: Text(
-                        "Registration Form",
-                        style: TextStyle(
-                            color: AppColor.primaryColor, fontSize: 28),
-                      ),
-                    )
-                  ],
-                ),
-                TextFormField(
-                  autocorrect: false,
-                  decoration: const InputDecoration(
-                    hintText: "e.g, Itachi",
-                    border: UnderlineInputBorder(),
-                    labelText: 'First Name',
-                  ),
-                  onFieldSubmitted: (value) => studentFnameValue = value,
-                ),
-                TextFormField(
-                  autocorrect: false,
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'Last Name',
-                    hintText: "e.g, Uchiha",
-                  ),
-                  onFieldSubmitted: (value) => studentLnameValue = value,
-                ),
-                DropdownButton<String>(
-                  value: genderDropdownValue,
-                  icon: const Icon(Icons.arrow_drop_down),
-                  underline: Container(
-                    height: 2,
-                  ),
-                  onChanged: (String? value) {
-                    // This is called when the user selects an item.
-                    setState(() {
-                      genderDropdownValue = value!;
-                    });
-                  },
-                  items:
-                      genderList.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
                     );
-                  }).toList(),
+                  },
                 ),
-                DropdownButton<String>(
-                  value: religionDropDownValue,
-                  icon: const Icon(Icons.arrow_drop_down),
-                  underline: Container(
-                    height: 2,
-                  ),
-                  onChanged: (String? value) {
-                    // This is called when the user selects an item.
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
                     setState(() {
-                      religionDropDownValue = value!;
+                      formFields.add(
+                          FormFieldModel('Field ${formFields.length + 1}', ''));
                     });
                   },
-                  items: religionList
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
+                  child: Text('Add Field'),
                 ),
-                DropdownButton(
-                    value: subCastDropDownValue,
-                    underline: Container(
-                      height: 2,
-                    ),
-                    items:
-                        subList.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (String? value) {
-                      // This is called when the user selects an item.
-                      setState(() {
-                        subCastDropDownValue = value!;
-                      });
-                    }),
-                GestureDetector(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 0),
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                          "Select Date of Birth : ${dobValue.toString().split(" ")[0]}",
-                          style: const TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Icon(Icons.date_range),
-                        ),
-                      ],
-                    ),
-                  ),
-                  onTap: () {
-                    showDatePicker(
-                      context: context,
-                      firstDate: DateTime.utc(DateTime.now().year - 60),
-                      lastDate: DateTime.now(),
-                      initialDate: dobValue,
-                    ).then((value) {
-                      try {
-                        setState(() {
-                          dobValue = value!;
-                        });
-                        dobValue = value!;
-                      } catch (e) {
-                        log(e.toString());
-                      }
-                      log("Value : $dobValue");
-                      log("Gender : $gender");
-                    });
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    // Perform form submission here (e.g., validate fields, submit data)
+                    _submitForm();
                   },
-                ),
-                TextFormField(
-                  autocorrect: false,
-                  onFieldSubmitted: (value) => aadharNumberValue = value,
-                  validator: (value) {
-                    if (value!.length < 12) {}
-                  },
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'Aadhar Card',
-                  ),
-                ),
-                TextFormField(
-                  autocorrect: false,
-                  onFieldSubmitted: (value) => addressValue = value,
-                  decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Address Line 1',
-                      hintText:
-                          "House/Buldin, Street/Area, District, City/UT, Pin-Code"),
-                ),
-                TextFormField(
-                  autocorrect: false,
-                  onFieldSubmitted: (value) => motherNameValue = value,
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'Mother Name',
-                  ),
-                ),
-                TextFormField(
-                  autocorrect: false,
-                  onFieldSubmitted: (value) => fatherNameValue = value,
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'Father Name',
-                  ),
-                ),
-                TextFormField(
-                  autocorrect: false,
-                  onFieldSubmitted: (value) => gardiuanNumberValue = value,
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'Gardiuan Name',
-                  ),
-                ),
-                TextFormField(
-                  autocorrect: false,
-                  onFieldSubmitted: (value) => passwordValue = value,
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'Password',
-                  ),
-                ),
-                TextFormField(
-                  autocorrect: false,
-                  onFieldSubmitted: (value) => re_passwordValue = value,
-                  decoration: const InputDecoration(
-                    border: UnderlineInputBorder(),
-                    labelText: 'Re-Enter Password',
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: OutlinedButton(
-                          onPressed: () {
-                            if (passwordValue != re_passwordValue) {
-                              _showMyDialog("Password doesn't match!!");
-                            } else {
-                              var student = StudentData(
-                                  "${dobValue.toString()}_${DateTime.now().millisecondsSinceEpoch}_SchoolName",
-                                  studentFnameValue,
-                                  studentLnameValue,
-                                  genderDropdownValue,
-                                  0,
-                                  "",
-                                  dobValue.millisecondsSinceEpoch,
-                                  int.parse(aadharNumberValue),
-                                  addressValue,
-                                  subCastDropDownValue,
-                                  religionDropDownValue,
-                                  0,
-                                  0,
-                                  DateTime.now().millisecondsSinceEpoch,
-                                  fatherNameValue.split(" ")[0],
-                                  fatherNameValue.split(" ")[1],
-                                  motherNameValue.split(" ")[0],
-                                  motherNameValue.split(" ")[1],
-                                  gardiuanNumberValue,
-                                  Securty().encrypt(passwordValue).toString());
-                              var studentJson = jsonEncode(student);
-                              log(studentJson);
-                              var header = <String, String>{};
-                              header["Accept"] = "*/*";
-                              ServerAPI.POST_STRING(
-                                  AppServer.toUri(AppServer.student_register),
-                                  header: header,
-                                  body: studentJson);
-                            }
-                          },
-                          child: const Row(
-                            children: [Text("Submit"), Icon(Icons.check)],
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: OutlinedButton(
-                          onPressed: () => {},
-                          child: const Row(
-                            children: [
-                              Text("Submit & Next"),
-                              Icon(Icons.check)
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: Text('Submit'),
                 ),
               ],
             ),

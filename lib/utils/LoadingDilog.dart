@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoadingDilog extends StatelessWidget {
-  const LoadingDilog({Key? key}) : super(key: key);
+  const LoadingDilog({super.key});
 
   static void loadLoadingDilog(BuildContext context) {}
 

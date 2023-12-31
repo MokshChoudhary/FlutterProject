@@ -5,7 +5,7 @@ class AppServer {
   static const host = "localhost";
   static const port = 8000;
   static const url = "http://localhost:8000/";
-  static const version = "version";
+  static const version = "get/versionCheck";
   static const student_register = "student_register";
   static const student_login = "student_login";
   static const class_meta_data = "student_login";

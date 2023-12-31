@@ -14,7 +14,6 @@ import 'package:studenthub/database/HubDatabase.dart';
 import 'package:studenthub/service/ServersAPI.dart';
 
 import 'database/SettingData.dart';
-import 'homeScreen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -69,9 +68,9 @@ class _SplashScreenState extends State<SplashScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Connection Alert'),
-          content: SingleChildScrollView(
+          content: const SingleChildScrollView(
             child: ListBody(
-              children: const <Widget>[
+              children: <Widget>[
                 Text('Server Connection...'),
                 Text('Could not able to connect with server!'),
               ],
@@ -109,7 +108,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void serverCheck() {
-    ServerAPI.ping().then((value) {
+    ServerAPI().ping().then((value) {
       if (value != Null) {
         Map<String, dynamic> s = jsonDecode((value as http.Response).body);
         if (value.statusCode == 200) {

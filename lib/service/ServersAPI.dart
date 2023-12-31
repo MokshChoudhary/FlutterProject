@@ -2,13 +2,11 @@
 
 import 'dart:developer';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:studenthub/constant/server.dart';
 
 class ServerAPI {
-  static void serverLog(String url, String type,
-      {Object? header, Object? body}) {
+  void serverLog(String url, String type, {Object? header, Object? body}) {
     log("########################$type#####################");
     log("URL : $url");
     log("Header : $header");
@@ -16,17 +14,19 @@ class ServerAPI {
     log("##################################################");
   }
 
-  static Future<Object> ping() async {
+  Future<Object> ping() async {
     try {
-      serverLog(AppServer.url, "Request");
-      return await http.get(Uri.parse(AppServer.url));
+      serverLog(AppServer.url + AppServer.version, "Request",
+          header: {"version": 1.0});
+      return await http.post(Uri.parse(AppServer.url + AppServer.version),
+          headers: {"version": "1.0"});
     } catch (e) {
       log(e.toString());
       return Null;
     }
   }
 
-  static Future<Object> GET(String url, {Map<String, String>? header}) async {
+  Future<Object> GET(String url, {Map<String, String>? header}) async {
     try {
       serverLog(url, "Request", header: header);
       return await http.get(Uri(scheme: url), headers: header);
@@ -35,8 +35,7 @@ class ServerAPI {
     }
   }
 
-  static Future<Object> GET_STRING(String url,
-      {Map<String, String>? header}) async {
+  Future<Object> GET_STRING(String url, {Map<String, String>? header}) async {
     try {
       serverLog(url, "Request", header: header);
       return await http.get(Uri(scheme: url), headers: header);
@@ -45,13 +44,13 @@ class ServerAPI {
     }
   }
 
-  static Future<Object> POST(Uri url,
+  Future<Object> POST(Uri url,
       {required Map<String, Object>? body, Map<String, String>? header}) async {
     serverLog(url.toString(), "Request", header: header, body: body);
     return await http.post(url, headers: header, body: body);
   }
 
-  static Future<Object> POST_STRING(Uri url,
+  Future<Object> POST_STRING(Uri url,
       {required String? body, Map<String, String>? header}) async {
     serverLog(url.toString(), "Request", header: header, body: body);
     return await http.post(url, headers: header, body: body);
