@@ -3,16 +3,16 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:studenthub/LoginImpl.dart';
+import 'package:studenthub/screens/LoginImpl.dart';
 import 'package:studenthub/constant/colors.dart';
 import 'package:studenthub/database/LoginData.dart';
 import 'package:studenthub/database/StudentData.dart';
-import 'package:studenthub/homeScreen.dart';
+import 'package:studenthub/screens/homeScreen.dart';
 import 'package:studenthub/registerView/registerScreen.dart';
 import 'package:studenthub/utils/LoadingDilog.dart';
 import 'package:studenthub/utils/Securty.dart';
 
-import 'database/HubDatabase.dart';
+import '../database/HubDatabase.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -114,7 +114,7 @@ class _LoginScreen extends State<StatefulWidget> {
                     TextField(
                       autocorrect: false,
                       obscureText: !_passwordVisibity,
-                      onChanged: (value) => passValue = value,
+                      onChanged: (value) => {passValue = value, value = ""},
                       decoration: InputDecoration(
                         suffixIcon: IconButton(
                             onPressed: () {
@@ -146,7 +146,7 @@ class _LoginScreen extends State<StatefulWidget> {
                                       Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                               builder: (BuildContext context) =>
-                                                  const LoginScreen()));
+                                                  const HomeScreen()));
                                     }
                                     getdatabase().then((db) => {
                                           db.loginDao

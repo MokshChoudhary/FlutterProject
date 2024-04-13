@@ -1,16 +1,11 @@
 // ignore_for_file: file_names, library_private_types_in_public_api, non_constant_identifier_names
 
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:studenthub/constant/server.dart';
 
 import '../constant/colors.dart';
 import '../database/FormFieldModel.dart';
-import '../database/StudentData.dart';
 import '../service/ServersAPI.dart';
-import '../utils/Securty.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -54,7 +49,7 @@ class _RegisterScreen extends State<StatefulWidget> {
   void getMetaDataFromServer() async {
     var header = <String, String>{};
     header["Accept"] = "*/*";
-    ServerAPI().POST_STRING(AppServer.toUri(AppServer.class_meta_data),
+    ServerAPI().POST_STRING(AppServer.class_meta_data,
         header: header, body: "{'classId':''}");
   }
 
@@ -125,7 +120,7 @@ class _RegisterScreen extends State<StatefulWidget> {
                     );
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     setState(() {
@@ -135,7 +130,7 @@ class _RegisterScreen extends State<StatefulWidget> {
                   },
                   child: Text('Add Field'),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
                     // Perform form submission here (e.g., validate fields, submit data)

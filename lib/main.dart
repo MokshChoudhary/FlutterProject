@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:studenthub/screens/splashScreen.dart';
 // import 'package:studenthub/utils/Securty.dart';
 import 'constant/config.dart';
-import 'splashScreen.dart';
 
 Future<void> main() async {
   if (!AppConfig.isDebug) {

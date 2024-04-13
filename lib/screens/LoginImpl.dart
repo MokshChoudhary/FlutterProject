@@ -11,17 +11,18 @@ import 'package:http/http.dart' as http;
 import 'package:studenthub/service/ServersAPI.dart';
 import 'package:studenthub/utils/Securty.dart';
 
-import 'constant/server.dart';
-import 'dataContainer/ErrorHandler.dart';
-import 'database/StudentData.dart';
+import '../constant/server.dart';
+import '../dataContainer/ErrorHandler.dart';
+import '../database/StudentData.dart';
 
 class LoginImpl {
   LoginImpl() {}
 
   Future<Object?> getStudentLogin(String userName, String password) async {
     Map<String, String> param = {};
-    param["student_id"] = userName;
-    param["password"] = Security().encrypt(password);
+    param["username"] = userName;
+    // param["password"] = Security().encrypt(password);
+    param["password"] = password;
 
     var body = const JsonEncoder().convert(param);
     Object? dataToReturn;

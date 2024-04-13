@@ -16,9 +16,9 @@ class ServerAPI {
 
   Future<Object> ping() async {
     try {
-      serverLog(AppServer.url + AppServer.version, "Request",
+      serverLog(AppServer.toUri(AppServer.version).toString(), "Request",
           header: {"version": 1.0});
-      return await http.post(Uri.parse(AppServer.url + AppServer.version),
+      return await http.post(AppServer.toUri(AppServer.version),
           headers: {"version": "1.0"});
     } catch (e) {
       log(e.toString());
@@ -28,8 +28,8 @@ class ServerAPI {
 
   Future<Object> GET(String url, {Map<String, String>? header}) async {
     try {
-      serverLog(url, "Request", header: header);
-      return await http.get(Uri(scheme: url), headers: header);
+      serverLog(AppServer.toUri(url).toString(), "Request", header: header);
+      return await http.get(AppServer.toUri(url), headers: header);
     } catch (e) {
       return Null;
     }
@@ -37,17 +37,18 @@ class ServerAPI {
 
   Future<Object> GET_STRING(String url, {Map<String, String>? header}) async {
     try {
-      serverLog(url, "Request", header: header);
-      return await http.get(Uri(scheme: url), headers: header);
+      serverLog(AppServer.toUri(url).toString(), "Request", header: header);
+      return await http.get(AppServer.toUri(url), headers: header);
     } catch (e) {
       return Null;
     }
   }
 
-  Future<Object> POST(Uri url,
+  Future<Object> POST(String url,
       {required Map<String, Object>? body, Map<String, String>? header}) async {
-    serverLog(url.toString(), "Request", header: header, body: body);
-    return await http.post(url, headers: header, body: body);
+    serverLog(AppServer.toUri(url).toString(), "Request",
+        header: header, body: body);
+    return await http.post(AppServer.toUri(url), headers: header, body: body);
   }
 
   Future<Object> POST_STRING(Uri url,

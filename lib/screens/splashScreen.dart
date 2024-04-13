@@ -8,12 +8,12 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:studenthub/LoginScreen.dart';
+import 'package:studenthub/screens/LoginScreen.dart';
 import 'package:studenthub/constant/colors.dart';
 import 'package:studenthub/database/HubDatabase.dart';
 import 'package:studenthub/service/ServersAPI.dart';
 
-import 'database/SettingData.dart';
+import '../database/SettingData.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -124,7 +124,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void loginCheck() async {
     final HubDatabase database =
         await $FloorHubDatabase.databaseBuilder('studentHub.db').build();
-    getDatabasesPath().then((v) => log("Datatabase path : $v"));
+    getDatabasesPath().then((v) => log("Database path : $v"));
     Timer(
       const Duration(seconds: 3),
       () => Navigator.of(context).pushReplacement(

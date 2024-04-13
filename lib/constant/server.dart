@@ -2,12 +2,11 @@
 
 class AppServer {
   static const scheme = "http";
-  static const host = "localhost";
+  static const host = "127.0.0.1";
   static const port = 8000;
-  static const url = "http://localhost:8000/";
   static const version = "get/versionCheck";
   static const student_register = "student_register";
-  static const student_login = "student_login";
+  static const student_login = "login/student";
   static const class_meta_data = "student_login";
 
   static Uri toUri(String path) {
