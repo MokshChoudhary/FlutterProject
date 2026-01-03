@@ -16,7 +16,7 @@ import '../dataContainer/ErrorHandler.dart';
 import '../database/StudentData.dart';
 
 class LoginImpl {
-  LoginImpl() {}
+  LoginImpl();
 
   Future<Object?> getStudentLogin(String userName, String password) async {
     Map<String, String> param = {};

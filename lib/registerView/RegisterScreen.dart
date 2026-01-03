@@ -49,7 +49,7 @@ class _RegisterScreen extends State<StatefulWidget> {
   void getMetaDataFromServer() async {
     var header = <String, String>{};
     header["Accept"] = "*/*";
-    ServerAPI().POST_STRING(AppServer.class_meta_data,
+    ServerAPI().POST_STRING(AppServer.class_meta_data as Uri,
         header: header, body: "{'classId':''}");
   }
 
@@ -128,7 +128,7 @@ class _RegisterScreen extends State<StatefulWidget> {
                           FormFieldModel('Field ${formFields.length + 1}', ''));
                     });
                   },
-                  child: Text('Add Field'),
+                  child: const Text('Add Field'),
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
@@ -136,7 +136,7 @@ class _RegisterScreen extends State<StatefulWidget> {
                     // Perform form submission here (e.g., validate fields, submit data)
                     _submitForm();
                   },
-                  child: Text('Submit'),
+                  child: const Text('Submit'),
                 ),
               ],
             ),

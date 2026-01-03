@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../database/FormFieldModel.dart';
 
 class DynamicForm extends StatefulWidget {
+  const DynamicForm({super.key});
+
   @override
   _DynamicFormState createState() => _DynamicFormState();
 }
@@ -14,7 +16,7 @@ class _DynamicFormState extends State<DynamicForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dynamic Form'),
+        title: const Text('Dynamic Form'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -40,7 +42,7 @@ class _DynamicFormState extends State<DynamicForm> {
                 );
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             // Button to add more form fields
             ElevatedButton(
               onPressed: () {
@@ -50,7 +52,7 @@ class _DynamicFormState extends State<DynamicForm> {
                       FormFieldModel('Field ${formFields.length + 1}', ''));
                 });
               },
-              child: Text('Add Field'),
+              child: const Text('Add Field'),
             ),
           ],
         ),
